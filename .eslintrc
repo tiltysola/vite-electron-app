@@ -1,0 +1,7 @@
+{
+  "extends": "eslint-config-ali/typescript/react",
+  "rules": {
+    "react/no-array-index-key": 0,
+    "no-console": 0
+  }
+}
