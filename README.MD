@@ -1,67 +1,105 @@
 # Vite-Electron-App
 
-Drop webpack and enjoy vite! [中文文档](https://git.acgme.cn/saya/vite-electron-app/blob/master/READMECN.MD)
+A modern Electron application template using Vite for fast development and building. This template provides a solid foundation for building cross-platform desktop applications with React and TypeScript.
+
+## Features
+
+- ⚡️ Lightning fast HMR (Hot Module Replacement)
+- 🚀 Vite-powered build system
+- 📦 Electron for cross-platform desktop apps
+- ⚛️ React for UI development
+- 🔷 TypeScript for type safety
+- 🎨 Modern development experience
 
 ## Dependencies
 
-1. Vite 2.6.7
-2. ESBuild 0.13.6
-3. Electron 15.1.2
-4. React 17.0.2
-5. Typescript 4.4.4
+- Vite 5.x
+- Electron 28.x
+- React 18.x
+- TypeScript 5.x
+- ESBuild (bundled with Vite)
 
-## Contribute
+## Getting Started
 
-### 1. First clone this project.
+### Prerequisites
 
-```
-// from my private source
-$ git clone https://git.acgme.cn/saya/vite-electron-app.git --depth=1
+- Node.js 18.x or later
+- npm 9.x or later
 
-// from github source
-$ git clone https://github.com/AlishaHawkward/vite-electron-app.git --depth=1
-```
+### Installation
 
-### 2. Show your intelligent!
+```bash
+# Clone the repository
+git clone https://github.com/AlishaHawkward/vite-electron-app.git --depth=1
 
-```
-Electron service entry: ./src/background.ts
-React entry: ./src/main.tsx
-```
+# Navigate to project directory
+cd vite-electron-app
 
-### 3. Test your app.
-
-```
-$ npm run dev
+# Install dependencies
+npm install
 ```
 
-### 4. Build your app.
+### Development
 
-```
-$ npm run build
-```
-
-### 5. Lint your code.
-
-```
-$ npm run lint
-$ npm run lint:fix
+```bash
+# Start development server
+npm run dev
 ```
 
-### 6. Other useful commands.
+### Building
 
-Clean dist dir: `npm run clean`
+```bash
+# Build for production
+npm run build
+```
 
-## Communicate with main process
+### Code Quality
 
-1. Use `window.ipcRenderer.send()` from renderer process to main process.
+```bash
+# Run linter
+npm run lint
 
-2. Use `window.ipcRenderer.on()` from main process to renderer process.
+# Fix linting issues
+npm run lint:fix
 
-## What you need to know
+# Clean build directory
+npm run clean
+```
 
-1. Main process & Render process use ipcRenderer to communicate.
+## Project Structure
 
-2. You can use and distribute this project anywhere, but I hope you could keep the original README.MD.
+```
+├── src/
+│   ├── main/           # Electron main process
+│   ├── render/         # React application
+│   └── types/          # TypeScript type definitions
+└── build/              # Build scripts
+```
 
-3. Enjoy it!
+## Inter-Process Communication
+
+The application uses Electron's IPC (Inter-Process Communication) for communication between the main and renderer processes:
+
+```typescript
+// From renderer to main process
+window.ipcRenderer.send('channel-name', data);
+
+// From main to renderer process
+window.ipcRenderer.on('channel-name', (event, data) => {
+  // Handle data
+});
+```
+
+## License
+
+This project is open source and available under the MIT License. Feel free to use and modify it for your projects.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Acknowledgments
+
+- Original template by [AlishaHawkward](https://github.com/AlishaHawkward)
+- Built with [Vite](https://vitejs.dev/)
+- Powered by [Electron](https://www.electronjs.org/)

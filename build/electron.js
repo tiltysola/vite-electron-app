@@ -2,10 +2,6 @@ const esbuild = require('esbuild');
 const path = require('path');
 const fs = require('fs');
 
-const electron = require('electron-connect').server.create({
-  stopOnClose: true,
-});
-
 const localPkgJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
 
 const input_dir = path.join(__dirname, '../src/main/background.ts');
@@ -37,17 +33,7 @@ if (process.env.NODE_ENV === 'production') {
     ...common_config,
     define: {
       'process.env.ENV': '\'development\'',
-      'process.env.PORT': 14843,
+      'process.env.PORT': '14843',
     },
-    watch: {
-      onRebuild: (err) => {
-        if (err) console.error('[ESBuild] Rebuild failed!');
-        else {
-          electron.restart();
-        }
-      },
-    },
-  }).then(() => {
-    electron.start();
   });
 }

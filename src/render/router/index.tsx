@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Welcome from '@/pages/welcome';
 import ExampleIpcRenderer from '@/pages/example/ipcrenderer';
@@ -7,13 +7,13 @@ import Notfound from '@/pages/notfound';
 
 const Index = () => {
   return (
-    <Switch>
-      <Redirect from="/" to="/welcome" exact />
-      <Route path="/welcome" component={Welcome} exact />
-      <Route path="/example/ipcrenderer" component={ExampleIpcRenderer} exact />
-      <Route path="/example/request" component={ExampleRequest} exact />
-      <Route path="*" component={Notfound} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<Navigate to="/welcome" replace />} />
+      <Route path="/welcome" element={<Welcome />} />
+      <Route path="/example/ipcrenderer" element={<ExampleIpcRenderer />} />
+      <Route path="/example/request" element={<ExampleRequest />} />
+      <Route path="*" element={<Notfound />} />
+    </Routes>
   );
 };
 

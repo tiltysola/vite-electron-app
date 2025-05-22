@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { ipcMain } from 'electron';
 
 const sayHello = () => {

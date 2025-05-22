@@ -1,67 +1,105 @@
 # Vite-Electron-App
 
-抛弃掉繁重的Webpack吧！
+一个使用 Vite 构建的现代化 Electron 应用程序模板。该模板为使用 React 和 TypeScript 构建跨平台桌面应用程序提供了坚实的基础。
+
+## 特性
+
+- ⚡️ 闪电般的 HMR（热模块替换）
+- 🚀 Vite 驱动的构建系统
+- 📦 Electron 跨平台桌面应用
+- ⚛️ React UI 开发
+- 🔷 TypeScript 类型安全
+- 🎨 现代化开发体验
 
 ## 依赖项
 
-1. Vite 2.6.7
-2. ESBuild 0.13.6
-3. Electron 15.1.2
-4. React 17.0.2
-5. Typescript 4.4.4
+- Vite 5.x
+- Electron 28.x
+- React 18.x
+- TypeScript 5.x
+- ESBuild（随 Vite 打包）
 
-## 使用说明
+## 开始使用
 
-### 1. 克隆当前项目
+### 前置要求
 
-```
-// 从 私有源 进行克隆
-$ git clone https://git.acgme.cn/saya/vite-electron-app.git --depth=1
+- Node.js 18.x 或更高版本
+- npm 9.x 或更高版本
 
-// 从 Github 源进行克隆
-$ git clone https://github.com/AlishaHawkward/vite-electron-app.git --depth=1
-```
+### 安装
 
-### 2. 发挥你的才华！
+```bash
+# 克隆仓库
+git clone https://github.com/AlishaHawkward/vite-electron-app.git --depth=1
 
-```
-主入口: ./src/background.ts
-渲染入口: ./src/main.tsx
-```
+# 进入项目目录
+cd vite-electron-app
 
-### 3. 测试你的程序
-
-```
-$ npm run dev
+# 安装依赖
+npm install
 ```
 
-### 4. 构建你的程序
+### 开发
 
-```
-$ npm run build
-```
-
-### 5. 执行代码检查
-
-```
-$ npm run lint
-$ npm run lint:fix
+```bash
+# 启动开发服务器
+npm run dev
 ```
 
-### 6. 其它有用的功能
+### 构建
 
-清空dist目录: `npm run clean`
+```bash
+# 构建生产版本
+npm run build
+```
 
-## 和主进程进行通信
+### 代码质量
 
-1. 在渲染进程中使用 `window.ipcRenderer.send()` 来向主进程发送通信。
+```bash
+# 运行代码检查
+npm run lint
 
-2. 在主进程中使用 `window.ipcRenderer.on()` 来接受渲染进程发送来的消息。
+# 修复代码检查问题
+npm run lint:fix
 
-## 注意
+# 清理构建目录
+npm run clean
+```
 
-1. 主进程和渲染进程之间使用 ipcRenderer 进行通讯。
+## 项目结构
 
-2. 你可以在任何地方使用和分发本项目，但是如果你要开源发布，希望您可以保留当前README.MD。
+```
+├── src/
+│   ├── main/           # Electron 主进程
+│   ├── render/         # React 应用
+│   └── types/          # TypeScript 类型定义
+└── build/              # 构建脚本
+```
 
-3. 尽情的使用吧！
+## 进程间通信
+
+应用程序使用 Electron 的 IPC（进程间通信）在主进程和渲染进程之间进行通信：
+
+```typescript
+// 从渲染进程到主进程
+window.ipcRenderer.send('channel-name', data);
+
+// 从主进程到渲染进程
+window.ipcRenderer.on('channel-name', (event, data) => {
+  // 处理数据
+});
+```
+
+## 许可证
+
+本项目是开源的，采用 MIT 许可证。您可以自由地使用和修改它。
+
+## 贡献
+
+欢迎贡献！请随时提交 Pull Request。
+
+## 致谢
+
+- 原始模板由 [AlishaHawkward](https://github.com/AlishaHawkward) 创建
+- 使用 [Vite](https://vitejs.dev/) 构建
+- 由 [Electron](https://www.electronjs.org/) 提供支持

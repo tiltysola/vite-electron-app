@@ -4,11 +4,11 @@ const test = {
       setTimeout(() => {
         resolve({
           data,
-          handled: 'handled'
-        })
-      }, 1000)
-    })
-  }
-}
+          handled: 'handled',
+        });
+      }, 1000);
+    });
+  },
+};
 
 export default test;

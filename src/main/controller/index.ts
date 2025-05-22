@@ -1,29 +1,32 @@
+/* eslint-disable no-await-in-loop */
+
 import { ipcMain } from 'electron';
 import test from './test';
 
 interface AjaxProps {
   url: string;
-  data?: {};
-  headers: {};
+  data?: any;
+  headers: any;
 }
 
 const routes = {
-  test
-}
+  test,
+};
 
 const router = async () => {
   ipcMain.handle('__ajax__', async (event, { url, data: requestData, headers: requestHeaders }: AjaxProps) => {
     const gmtReceive = new Date().getTime();
-    let code: number = 200, data: any = null;
+    let code = 200; let
+      data: any = null;
     if (/^(?:\/[A-Za-z0-9_-]+?)+$/.test(url)) {
       let route: any = routes;
       const requestUrl = url.split('/');
       for (let i = 1; i < requestUrl.length; i++) {
-        route = route[requestUrl[i]]
+        route = route[requestUrl[i]];
         if (!route) {
           // route not found
           code = 500;
-          data = 'ROUTE_NOT_FOUND'
+          data = 'ROUTE_NOT_FOUND';
           break;
         }
         if (i === requestUrl.length - 1) {
@@ -33,7 +36,7 @@ const router = async () => {
     } else {
       // url must: /xx/xx
       code = 500;
-      data = 'URL_INVALID'
+      data = 'URL_INVALID';
     }
     const gmtResponse = new Date().getTime();
     return {
@@ -43,12 +46,12 @@ const router = async () => {
           url,
           gmtReceive,
           gmtResponse,
-        }
+        },
       },
       data,
-      code
+      code,
     };
   });
-}
+};
 
 export default router;

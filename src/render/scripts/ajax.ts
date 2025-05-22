@@ -1,6 +1,6 @@
 interface AjaxProps {
   url: string;
-  data?: {};
+  data?: any;
 }
 
 const ajax = ({

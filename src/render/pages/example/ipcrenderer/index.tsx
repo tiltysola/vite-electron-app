@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { useEffect, useState, useRef } from 'react';
 import { useIpcRenderer } from '@/hooks';
 
