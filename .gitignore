@@ -5,9 +5,6 @@ node_modules/
 
 # Build outputs
 dist/
-build/
-out/
-release/
 
 # Testing
 coverage/
