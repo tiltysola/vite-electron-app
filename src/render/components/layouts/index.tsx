@@ -1,10 +1,10 @@
 import Router from '@/router';
 
-import './style.less';
+import styles from './style.module.less';
 
 const Index = () => {
   return (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <Router />
     </div>
   );

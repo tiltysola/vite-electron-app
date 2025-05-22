@@ -71,8 +71,7 @@ npm run clean
 ```
 ├── src/
 │   ├── main/           # Electron main process
-│   ├── render/         # React application
-│   └── types/          # TypeScript type definitions
+│   └── render/         # React application
 └── build/              # Build scripts
 ```
 

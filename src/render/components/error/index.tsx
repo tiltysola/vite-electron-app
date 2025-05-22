@@ -1,12 +1,12 @@
-import { ReactChild } from 'react';
+import { ReactNode } from 'react';
 
-import './style.less';
+import styles from './style.module.less';
 
 interface ErrorDataProp {
   data: {
     title: string;
     desc: Array<{
-      text: string | ReactChild;
+      text: string | ReactNode;
       type?: 'normal' | 'primary';
     }>;
     footer?: string;
@@ -15,19 +15,19 @@ interface ErrorDataProp {
 
 const Index = ({ data }: ErrorDataProp) => {
   return (
-    <div className="error">
-      <div className="e-header">
-        <img className="e-logo" src="logo.png" />
-        <span className="e-info">{data.title}</span>
+    <div className={styles.error}>
+      <div className={styles.eHeader}>
+        <img className={styles.eLogo} src="logo.png" />
+        <span className={styles.eInfo}>{data.title}</span>
       </div>
-      <div className="e-main">
+      <div className={styles.eMain}>
         {data.desc.map((v, i) => (
-          <p className={`e-text-${v.type || 'normal'}`} key={i}>{v.text}</p>
+          <p className={styles[`eText${v.type ? v.type.charAt(0).toUpperCase() + v.type.slice(1) : 'Normal'}`]} key={i}>{v.text}</p>
         ))}
       </div>
       {data.footer && (
-        <div className="e-footer">
-          <p className="e-text">{data.footer}</p>
+        <div className={styles.eFooter}>
+          <p className={styles.eText}>{data.footer}</p>
         </div>
       )}
     </div>

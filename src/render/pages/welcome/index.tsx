@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
 
-import './style.less';
+import styles from './style.module.less';
 
 const Index = () => {
   return (
-    <div className="welcome">
-      <div className="w-header">
-        <img className="w-logo" src="logo.png" />
-        <span className="w-info">Hello, react!</span>
+    <div className={styles.welcome}>
+      <div className={styles.wHeader}>
+        <img className={styles.wLogo} src="logo.png" />
+        <span className={styles.wInfo}>Hello, react!</span>
       </div>
-      <div className="w-main">
-        <p className="w-text-primary">This page is powered by vite, electron and react!</p>
-        <p className="w-text-normal">typescript and esbuild are also used for development!</p>
-        <p className="w-text-normal">Time: {new Date().toString()}</p>
+      <div className={styles.wMain}>
+        <p className={styles.wTextPrimary}>This page is powered by vite, electron and react!</p>
+        <p className={styles.wTextNormal}>typescript and esbuild are also used for development!</p>
+        <p className={styles.wTextNormal}>Time: {new Date().toString()}</p>
         <p>
           <Link to="/example/ipcrenderer">ipcRenderer example</Link>
         </p>
@@ -20,8 +20,8 @@ const Index = () => {
           <Link to="/example/request">request example</Link>
         </p>
       </div>
-      <div className="w-footer">
-        <p className="w-text">Vite Electron App</p>
+      <div className={styles.wFooter}>
+        <p className={styles.wText}>Vite Electron App</p>
       </div>
     </div>
   );

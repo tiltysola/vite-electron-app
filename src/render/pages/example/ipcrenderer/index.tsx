@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 import { useIpcRenderer } from '@/hooks';
 
-import './style.less';
+import styles from './style.module.less';
 
 const Index = () => {
   const [messageQueue, setMessageQueue] = useState<string[]>([]);
@@ -15,11 +16,11 @@ const Index = () => {
   }, [messageQueue]);
 
   useEffect(() => {
-    ipcRenderer.send('say_hello', {
+    window.ipcRenderer.send('say_hello', {
       msg: 'this is a request method!',
     });
     setMessageQueue(['MSG_SEND: this is a request method!']);
-    ipcRenderer.invoke('invoke').then((res) => {
+    window.ipcRenderer.invoke('invoke').then((res) => {
       console.log(res);
       messageQueueRef.current.push(`MSG_INVOKE: ${res}`);
       setMessageQueue([...messageQueueRef.current]);
@@ -33,10 +34,10 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="example-invoke">
-      <h1 className="title">Hello, react!</h1>
-      {messageQueue.map((v) => (
-        <p>{v}</p>
+    <div className={styles.exampleInvoke}>
+      <h1 className={styles.title}>Hello, react!</h1>
+      {messageQueue.map((v, i) => (
+        <p key={i}>{v}</p>
       ))}
       <p>
         <a href="/">Back</a>

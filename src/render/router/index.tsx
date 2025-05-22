@@ -1,9 +1,9 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Welcome from '@/pages/welcome';
-import ExampleIpcRenderer from '@/pages/example/ipcrenderer';
-import ExampleRequest from '@/pages/example/request';
-import Notfound from '@/pages/notfound';
+import ExampleIpcRenderer from '@/pages/Example/IpcRenderer';
+import ExampleRequest from '@/pages/Example/Request';
+import Notfound from '@/pages/NotFound';
+import Welcome from '@/pages/Welcome';
 
 const Index = () => {
   return (

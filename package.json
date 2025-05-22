@@ -1,17 +1,31 @@
 {
   "name": "vite-electron-app",
-  "version": "1.0.0",
-  "type": "commonjs",
+  "version": "2.0.0",
+  "type": "module",
   "main": "dist/main/background.js",
   "description": "vite-electron-app",
-  "homepage": "https://git.acgme.cn/saya/vite-electron-app",
+  "homepage": "https://github.com/tiltysola/vite-electron-app",
   "license": "MIT",
   "author": {
-    "name": "Saya",
-    "email": "kanade@acgme.cn"
+    "name": "TiltySola",
+    "email": "tilty.sola@gmail.com"
   },
   "repository": {
-    "url": "https://git.acgme.cn/saya/vite-electron-app.git"
+    "url": "https://github.com/tiltysola/vite-electron-app.git"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n=react,electron -c=green,blue \"npm run dev:react\" \"npm run dev:electron\"",
+    "dev:react": "vite",
+    "dev:electron": "cross-env NODE_ENV=development node build/electron.js && nodemon",
+    "build": "npm run build:react && npm run build:electron",
+    "build:react": "vite build",
+    "build:electron": "cross-env NODE_ENV=production node build/electron.js && electron-builder build --publish never",
+    "serve:react": "vite preview",
+    "clean": "rm -rf dist",
+    "prettier": "prettier --write .",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "convert-icons": "node build/convert-icons.js"
   },
   "build": {
     "appId": "<replace to your app id>",
@@ -38,18 +52,6 @@
       "appPackageUrl": "https://npmmirror.com/mirrors/electron-builder-binaries/"
     }
   },
-  "scripts": {
-    "dev": "concurrently -k -n=react,electron -c=green,blue \"npm run dev:react\" \"npm run dev:electron\"",
-    "dev:react": "vite",
-    "dev:electron": "cross-env NODE_ENV=development node build/electron.js && nodemon",
-    "build": "npm run build:react && npm run build:electron",
-    "build:react": "vite build",
-    "build:electron": "cross-env NODE_ENV=production node build/electron.js && electron-builder build --publish never",
-    "serve:react": "vite preview",
-    "clean": "rm -rf dist",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
-  },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -69,12 +71,15 @@
     "esbuild": "^0.25.4",
     "eslint": "^9.27.0",
     "eslint-config-ali": "^16.3.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "less": "^4.3.0",
     "nodemon": "^3.1.10",
     "png-to-ico": "^2.1.8",
+    "prettier": "^3.5.3",
     "sharp": "^0.34.2",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",

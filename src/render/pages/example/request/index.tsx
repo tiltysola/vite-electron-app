@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+
 import ajax from '@/scripts/ajax';
 
-import './style.less';
+import styles from './style.module.less';
 
 const Index = () => {
   const [data, setData] = useState('');
@@ -20,8 +21,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="example-request">
-      <h1 className="title">Hello, react!</h1>
+    <div className={styles.exampleRequest}>
+      <h1 className={styles.title}>Hello, react!</h1>
       <code>
         {data}
       </code>

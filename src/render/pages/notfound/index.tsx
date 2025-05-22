@@ -1,13 +1,14 @@
 import { useLocation } from 'react-router-dom';
-import Error from '@/components/error';
 
-import './style.less';
+import Error from '@/components/Error';
+
+import styles from './style.module.less';
 
 const Index = () => {
   const location = useLocation();
 
   return (
-    <div className="notfound">
+    <div className={styles.notfound}>
       <Error data={{
         title: 'Sorry, something went wrong.',
         desc: [{

@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 
-import Layout from '@/components/layouts';
+import Layout from '@/components/Layouts';
 
 import './global.less';
 

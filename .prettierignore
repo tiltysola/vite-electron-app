@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Cache and logs
+.cache/
+*.log
+
+# Config files
+.eslintrc
+.gitignore
+.npmrc
+.prettierignore
+.prettierrc
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Proceed by eslint
+**/*.js
+**/*.jsx
+**/*.ts
+**/*.tsx

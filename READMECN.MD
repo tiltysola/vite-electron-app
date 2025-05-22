@@ -71,8 +71,7 @@ npm run clean
 ```
 ├── src/
 │   ├── main/           # Electron 主进程
-│   ├── render/         # React 应用
-│   └── types/          # TypeScript 类型定义
+│   └── render/         # React 应用
 └── build/              # 构建脚本
 ```
 

@@ -1,7 +1,12 @@
-import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import ipcSayHello from './service/sayHello';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import router from './controller';
+import ipcSayHello from './service/sayHello';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function createWindow() {
   const win = new BrowserWindow({
