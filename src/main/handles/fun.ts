@@ -1,20 +1,16 @@
-/* eslint-disable no-console */
+ 
 
 import { ipcMain } from 'electron';
 
 const fun = () => {
-  ipcMain.on('funSayHello', (e, ...args) => {
-    console.log(...args);
-    e.reply('funReplyHello', 'hello');
+  ipcMain.on('funSayHello', (e, data) => {
+    setTimeout(() => {
+      e.reply('funReplyHello', `接收到了一条长度为${data.content.length}的消息`);
+    }, 1000);
   });
 
-  ipcMain.handle('funGetDirTree', async (e, ...args) => {
-    console.log(...args);
-    return 'handled';
-  });
-
-  ipcMain.handle('invoke', () => {
-    return 'handled';
+  ipcMain.handle('invoke', (e, data) => {
+    return `接收到了一条长度为${data.content.length}的消息`;
   });
 };
 

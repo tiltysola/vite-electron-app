@@ -64,6 +64,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@ant-design/x": "^1.6.0",
+    "antd": "^5.26.7",
     "chalk": "^5.5.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",

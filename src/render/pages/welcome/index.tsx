@@ -1,24 +1,50 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+import { Button, Splitter } from "antd";
 
 import styles from './style.module.less';
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  const handleIpcExample = () => {
+    navigate('/example');
+  };
+
+  const FreeComp = () => {
+    return (
+      <div className={styles.freeComp}>
+        <div className={styles.logo}>
+          <img src="logo.png" />
+        </div>
+        <div className={styles.title}>
+          <span>基于Electron构建的客户端</span>
+        </div>
+        <div className={styles.content}>
+          <span>欢迎体验由Electron技术驱动的客户端</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.welcome}>
-      <div className={styles.wHeader}>
-        <img className={styles.wLogo} src="logo.png" />
-        <span className={styles.wInfo}>Hello, react!</span>
-      </div>
-      <div className={styles.wMain}>
-        <p className={styles.wTextPrimary}>This page is powered by vite, electron and react!</p>
-        <p className={styles.wTextNormal}>typescript and esbuild are also used for development!</p>
-        <p className={styles.wTextNormal}>Time: {new Date().toString()}</p>
-        <p>
-          <Link to="/example">ipcRenderer example</Link>
-        </p>
-      </div>
-      <div className={styles.wFooter}>
-        <p className={styles.wText}>Vite Electron App</p>
+      <Splitter className={styles.splitter}>
+        <Splitter.Panel min={8}>
+          <div className={styles.splitterLeft}>
+            <FreeComp />
+          </div>
+        </Splitter.Panel>
+        <Splitter.Panel min={8}>
+          <div className={styles.splitterRight}>
+            <FreeComp />
+          </div>
+        </Splitter.Panel>
+      </Splitter>
+      <div className={styles.actions}>
+        <Button type="default" onClick={handleIpcExample}>
+          IPC通讯示例
+        </Button>
       </div>
     </div>
   );

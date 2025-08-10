@@ -1,4 +1,4 @@
-import { BaseWindow, WebContentsView, screen } from 'electron';
+import { BaseWindow, screen,WebContentsView } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -18,6 +18,8 @@ export const createWindow = () => {
     height: 600,
     frame: false,
     backgroundMaterial: 'acrylic',
+    minWidth: 800,
+    minHeight: 600,
     maxWidth: screenWidth,
     maxHeight: screenHeight,
   });
