@@ -16,7 +16,7 @@ const Index = () => {
   }, [messageQueue]);
 
   useEffect(() => {
-    window.ipcRenderer.send('say_hello', {
+    window.ipcRenderer.send('funSayHello', {
       msg: 'this is a request method!',
     });
     setMessageQueue(['MSG_SEND: this is a request method!']);
@@ -27,7 +27,7 @@ const Index = () => {
     });
   }, []);
 
-  useIpcRenderer.on('reply_hello', (e, ...args) => {
+  useIpcRenderer.on('funReplyHello', (e, ...args) => {
     console.log(e, ...args);
     messageQueueRef.current.push(`MSG_RECEIVED: ${[JSON.stringify(e), ...args].join(', ')}`);
     setMessageQueue([...messageQueueRef.current]);

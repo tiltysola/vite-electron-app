@@ -1,10 +1,16 @@
-import esbuild from 'esbuild';
+import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
+
+import electronConnect from 'electron-connect';
+import esbuild from 'esbuild';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const electron = electronConnect.server.create({
+  stopOnClose: true,
+});
 
 const localPkgJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
 
@@ -23,6 +29,10 @@ const common_config = {
     ...(localPkgJson.devDependencies || {}),
     ...(localPkgJson.peerDependencies || {}),
   }),
+  define: {
+    '__dirname': JSON.stringify(path.dirname(input_dir)),
+    '__filename': JSON.stringify(input_dir),
+  },
 };
 
 const preload_config = {
@@ -35,17 +45,30 @@ if (process.env.NODE_ENV === 'production') {
   esbuild.build({
     ...common_config,
     define: {
-      'process.env.ENV': '\'production\'',
+      ...common_config.define,
+      'process.env.ENV': "'production'",
     },
   });
   esbuild.build(preload_config);
 } else {
-  esbuild.build({
+  esbuild.context({
     ...common_config,
     define: {
-      'process.env.ENV': '\'development\'',
+      ...common_config.define,
+      'process.env.ENV': "'development'",
       'process.env.PORT': '14843',
     },
+    plugins: [{
+      name: 'plugin-on-rebuild',
+      setup(build) {
+        build.onEnd(() => {
+          electron.restart();
+        });
+      },
+    }]
+  }).then((context) => {
+    electron.start();
+    context.watch();
   });
   esbuild.build(preload_config);
 }

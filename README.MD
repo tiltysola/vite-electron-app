@@ -13,17 +13,17 @@ A modern Electron application template using Vite for fast development and build
 
 ## Dependencies
 
-- Vite 5.x
-- Electron 28.x
-- React 18.x
+- Vite 7.x
+- Electron 37.x
+- React 19.x
 - TypeScript 5.x
-- ESBuild (bundled with Vite)
+- ESBuild 0.25.x
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.x or later
+- Node.js 20.x or later
 - npm 9.x or later
 
 ### Installation

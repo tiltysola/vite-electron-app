@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/render'),
+      'package.json': path.resolve(__dirname, 'package.json'),
     },
   },
   css: {

@@ -1,0 +1,42 @@
+.icon-close {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .close-triangle {
+    transform-origin: 40px 40px;
+    &.top {
+      transform: rotate(45deg);
+    }
+    &.bottom {
+      transform: rotate(45deg);
+    }
+    &.left {
+      transform: rotate(45deg);
+    }
+    &.right {
+      transform: rotate(45deg);
+    }
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  &:hover {
+    .close-triangle {
+      &.top {
+        transform: rotate(45deg) translateY(-6px);
+      }
+      &.bottom {
+        transform: rotate(45deg) translateY(6px);
+      }
+      &.left {
+        transform: rotate(45deg) translateX(-6px);
+      }
+      &.right {
+        transform: rotate(45deg) translateX(6px);
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.icon-minus {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .minus-triangle {
+    transform-origin: 40px 40px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    &.top {
+      transform: rotate(90deg);
+    }
+    &.bottom {
+      transform: rotate(90deg);
+    }
+  }
+  &:hover {
+    .minus-triangle {
+      &.top {
+        transform: rotate(90deg) translateY(-6px);
+      }
+      &.bottom {
+        transform: rotate(90deg) translateY(6px);
+      }
+    }
+  }
+}

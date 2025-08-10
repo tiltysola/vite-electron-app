@@ -14,10 +14,7 @@ const Index = () => {
         <p className={styles.wTextNormal}>typescript and esbuild are also used for development!</p>
         <p className={styles.wTextNormal}>Time: {new Date().toString()}</p>
         <p>
-          <Link to="/example/ipcrenderer">ipcRenderer example</Link>
-        </p>
-        <p>
-          <Link to="/example/request">request example</Link>
+          <Link to="/example">ipcRenderer example</Link>
         </p>
       </div>
       <div className={styles.wFooter}>

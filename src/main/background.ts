@@ -1,26 +1,8 @@
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-import router from './controller';
-import ipcSayHello from './service/sayHello';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
-    },
-  });
-
-  process.env.ENV === 'production' ? win.loadFile(path.join(__dirname, '../render/index.html')) :
-    win.loadURL(`http://localhost:${process.env.PORT}`);
-}
+import ipcControl from './handles/control';
+import ipcFun from './handles/fun';
+import createWindow from './windows/main';
 
 app.whenReady().then(() => {
   createWindow();
@@ -33,10 +15,8 @@ app.whenReady().then(() => {
   });
 
   // ipcMain & ipcRenderer example handle function.
-  ipcSayHello();
-
-  // ajax request controller.
-  router();
+  ipcControl();
+  ipcFun();
 });
 
 app.on('window-all-closed', () => {
