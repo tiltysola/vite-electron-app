@@ -75,7 +75,14 @@
     position: absolute;
     bottom: 50%;
     left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     transform: translate(-50%, calc(50% + 96px));
+    gap: 8px;
     z-index: 100;
+    :global(.ant-tag) {
+      font-family: monospace;
+    }
   }
 }

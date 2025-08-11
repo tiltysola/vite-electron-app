@@ -23,7 +23,10 @@ const cleanUpServer = (eventType: string) => {
 /* StopHandler: end */
 
 /* Logger: start */
-const logPath = path.join(app.getPath('userData'), process.env.ENV !== 'development' ? 'logs' : 'logs-dev');
+const logPath = path.join(
+  app.getPath('userData'),
+  process.env.ENV !== 'development' ? 'logs' : 'logs-dev',
+);
 const logFileName = `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}.log`;
 
 /* PathExist: start */

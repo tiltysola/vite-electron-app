@@ -42,7 +42,10 @@ const Index = () => {
         </div>
       </div>
       <div className="title-bar-actions">
-        <span className="title-bar-actions-button title-bar-actions-minimize" onClick={handleMinimize}>
+        <span
+          className="title-bar-actions-button title-bar-actions-minimize"
+          onClick={handleMinimize}
+        >
           <Minus size={16} />
         </span>
         <span className="title-bar-actions-button title-bar-actions-resize" onClick={handleResize}>

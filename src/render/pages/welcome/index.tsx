@@ -1,10 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Splitter } from "antd";
+import { Button, Splitter, Tag } from 'antd';
 
 import styles from './style.module.less';
 
 const Index = () => {
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+
   const navigate = useNavigate();
 
   const handleIpcExample = () => {
@@ -27,6 +30,19 @@ const Index = () => {
     );
   };
 
+  useEffect(() => {
+    const requestAnimation = () => {
+      ipcRenderer.invoke('funCursorPosition').then((res) => {
+        setCursorPosition(res);
+        requestAnimation();
+      });
+    };
+    const animationFrame = requestAnimationFrame(requestAnimation);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   return (
     <div className={styles.welcome}>
       <Splitter className={styles.splitter}>
@@ -45,6 +61,9 @@ const Index = () => {
         <Button type="default" onClick={handleIpcExample}>
           IPC通讯示例
         </Button>
+        <Tag>
+          当前指针坐标 [{cursorPosition.x}, {cursorPosition.y}]
+        </Tag>
       </div>
     </div>
   );

@@ -1,5 +1,3 @@
- 
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,35 +29,42 @@ const Index = () => {
       role: 'user',
     };
     window.ipcRenderer.send('funSayHello', outgoingData);
-    setMessageQueue(messages => {
+    setMessageQueue((messages) => {
       return [...messages, outgoingData];
     });
     const outGoingDataInvoke: MessageProps = {
       content: '这是一条通过 ipcRenderer.invoke 方式发送的消息，将会立刻收到消息回复。',
       role: 'user',
     };
-    setMessageQueue(messages => {
+    setMessageQueue((messages) => {
       return [...messages, outGoingDataInvoke];
     });
-    window.ipcRenderer.invoke('invoke', outGoingDataInvoke).then((res) => {
+    window.ipcRenderer.invoke('funInvoke', outGoingDataInvoke).then((res) => {
       const incomingData: MessageProps = {
         content: `收到 ipcRenderer.invoke 的返回值: ${res}`,
         role: 'assistant',
       };
-      setMessageQueue(messages => {
+      setMessageQueue((messages) => {
         return [...messages, incomingData];
       });
     });
   }, []);
 
-  useIpcRenderer.on('funReplyHello', (e, data) => {
-    setMessageQueue(messages => {
-      return [...messages, {
-        content: `收到 ipcRenderer.send 的返回值: ${data}`,
-        role: 'assistant',
-      }];
-    });
-  }, []);
+  useIpcRenderer.on(
+    'funReplyHello',
+    (e, data) => {
+      setMessageQueue((messages) => {
+        return [
+          ...messages,
+          {
+            content: `收到 ipcRenderer.send 的返回值: ${data}`,
+            role: 'assistant',
+          },
+        ];
+      });
+    },
+    [],
+  );
 
   return (
     <div className={styles.example}>
@@ -80,7 +85,9 @@ const Index = () => {
           ))}
         </Flex>
         <Flex justify="end">
-          <Button type="default" onClick={handleBack}>返回首页</Button>
+          <Button type="default" onClick={handleBack}>
+            返回首页
+          </Button>
         </Flex>
       </Flex>
     </div>

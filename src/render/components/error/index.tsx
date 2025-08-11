@@ -22,7 +22,14 @@ const Index = ({ data }: ErrorDataProp) => {
       </div>
       <div className={styles.eMain}>
         {data.desc.map((v, i) => (
-          <p className={styles[`eText${v.type ? v.type.charAt(0).toUpperCase() + v.type.slice(1) : 'Normal'}`]} key={i}>{v.text}</p>
+          <p
+            className={
+              styles[`eText${v.type ? v.type.charAt(0).toUpperCase() + v.type.slice(1) : 'Normal'}`]
+            }
+            key={i}
+          >
+            {v.text}
+          </p>
         ))}
       </div>
       {data.footer && (

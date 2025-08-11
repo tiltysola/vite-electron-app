@@ -7,7 +7,10 @@ const on = (channel: string, listener: (event: Electron.IpcMainEvent, ...args: a
   ipcMain.on(channel, listener);
 };
 
-const handle = (channel: string, listener: (event: Electron.IpcMainInvokeEvent, ...args: any[]) => any) => {
+const handle = (
+  channel: string,
+  listener: (event: Electron.IpcMainInvokeEvent, ...args: any[]) => any,
+) => {
   logger.info('[IpcMain]', `Registered \`${channel}\` channel & handleListener.`);
   ipcMain.handle(channel, listener);
 };

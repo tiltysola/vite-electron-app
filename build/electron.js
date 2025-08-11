@@ -29,10 +29,6 @@ const common_config = {
     ...(localPkgJson.devDependencies || {}),
     ...(localPkgJson.peerDependencies || {}),
   }),
-  define: {
-    '__dirname': JSON.stringify(path.dirname(input_dir)),
-    '__filename': JSON.stringify(input_dir),
-  },
 };
 
 const preload_config = {
@@ -45,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
   esbuild.build({
     ...common_config,
     define: {
-      ...common_config.define,
+      '__dirname': JSON.stringify(path.join(__dirname, '../dist/main')),
       'process.env.ENV': "'production'",
     },
   });
@@ -54,7 +50,7 @@ if (process.env.NODE_ENV === 'production') {
   esbuild.context({
     ...common_config,
     define: {
-      ...common_config.define,
+      '__dirname': JSON.stringify(path.join(__dirname, '../dist/main')),
       'process.env.ENV': "'development'",
       'process.env.PORT': '14843',
     },

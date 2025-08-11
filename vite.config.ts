@@ -17,22 +17,26 @@ export default defineConfig({
   css: {
     modules: {
       localsConvention: 'camelCase',
-      generateScopedName: '[name]__[local]___[hash:base64:5]'
-    }
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
   },
-  plugins: [react(), eslint({
-    include: ['./src/**/*.ts', './src/**/*.tsx'],
-    fix: true
-  })],
+  plugins: [
+    react(),
+    eslint({
+      include: ['./src/**/*.ts', './src/**/*.tsx'],
+      fix: true,
+    }),
+  ],
   build: {
     outDir: path.resolve(__dirname, './dist/render'),
     emptyOutDir: true,
     rollupOptions: {
-      external: ['electron', 'path']
-    }
+      external: ['electron', 'path'],
+    },
+    chunkSizeWarningLimit: 10240,
   },
   optimizeDeps: {
-    exclude: ['electron']
+    exclude: ['electron'],
   },
   server: {
     port: 14843,

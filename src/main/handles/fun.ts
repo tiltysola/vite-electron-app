@@ -1,6 +1,4 @@
- 
-
-import { ipcMain } from 'electron';
+import { ipcMain, screen } from 'electron';
 
 const fun = () => {
   ipcMain.on('funSayHello', (e, data) => {
@@ -9,8 +7,13 @@ const fun = () => {
     }, 1000);
   });
 
-  ipcMain.handle('invoke', (e, data) => {
+  ipcMain.handle('funInvoke', (e, data) => {
     return `接收到了一条长度为${data.content.length}的消息`;
+  });
+
+  ipcMain.handle('funCursorPosition', () => {
+    const primaryDisplay = screen.getPrimaryDisplay();
+    return { ...primaryDisplay.bounds, ...screen.getCursorScreenPoint() };
   });
 };
 

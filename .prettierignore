@@ -19,9 +19,3 @@ build/
 # System files
 .DS_Store
 Thumbs.db
-
-# Proceed by eslint
-**/*.js
-**/*.jsx
-**/*.ts
-**/*.tsx
