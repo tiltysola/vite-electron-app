@@ -14,7 +14,27 @@ if (!singleInstance && process.env.ENV !== 'development') {
 }
 /* SingleInstance: end */
 
+/* Startup: if app is packaged, start at system startup. */
+// if (app.isPackaged) {
+//   /* Win32: start */
+//   if (process.platform === 'win32') {
+//     app.setLoginItemSettings({
+//       openAtLogin: true,
+//       openAsHidden: true,
+//       args: ['--openAsHidden'],
+//     });
+//   }
+//   /* Win32: end */
+// }
+/* Startup: end */
+
 app.whenReady().then(() => {
+  /* OpenAsHidden: judge if the application started at system startup */
+  if (process.argv.indexOf('--openAsHidden') < 0) {
+    createWindow();
+  }
+  /* OpenAsHidden: end */
+
   /* AppActivated: start */
   app.on('activate', () => {
     // If app is active but no window found, reinit window.
