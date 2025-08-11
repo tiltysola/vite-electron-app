@@ -1,8 +1,13 @@
-const sharp = require('sharp');
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
-const pngToIco = require('png-to-ico');
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import pngToIco from 'png-to-ico';
+import { fileURLToPath } from 'url';
+
+// 获取当前文件的目录
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 确保目录存在
 const dirs = [
@@ -38,8 +43,15 @@ async function generatePNGs() {
 // 生成 Windows ICO 文件
 async function generateICO() {
   try {
-    const icoBuffer = await pngToIco(pngFiles);
+    // 只使用较小的图标尺寸来避免文件过大
+    const smallPngFiles = pngFiles.filter(file => {
+      const size = parseInt(path.basename(file, '.png').split('x')[0]);
+      return size <= 256; // 只使用 256x256 及以下的图标
+    });
+
+    const icoBuffer = await pngToIco(smallPngFiles);
     fs.writeFileSync(path.join('build', 'icons', 'win', 'icon.ico'), icoBuffer);
+    console.log('ICO 文件生成成功，使用了以下尺寸:', smallPngFiles.map(f => path.basename(f)));
   } catch (err) {
     console.error('Error generating ICO file:', err);
   }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Splitter, Tag } from 'antd';
+import { Button, Flex, Splitter, Tag } from 'antd';
 
 import styles from './style.module.less';
 
@@ -12,6 +12,10 @@ const Index = () => {
 
   const handleIpcExample = () => {
     navigate('/example');
+  };
+
+  const handleDevTools = (type: 'title' | 'view') => {
+    ipcRenderer.invoke('funOpenDevTools', type);
   };
 
   const FreeComp = () => {
@@ -47,20 +51,28 @@ const Index = () => {
     <div className={styles.welcome}>
       <Splitter className={styles.splitter}>
         <Splitter.Panel min={8}>
-          <div className={styles.splitterLeft}>
+          <Flex className={styles.splitterLeft} justify="center" align="center">
             <FreeComp />
-          </div>
+          </Flex>
         </Splitter.Panel>
         <Splitter.Panel min={8}>
-          <div className={styles.splitterRight}>
+          <Flex className={styles.splitterRight} justify="center" align="center">
             <FreeComp />
-          </div>
+          </Flex>
         </Splitter.Panel>
       </Splitter>
-      <div className={styles.actions}>
+      <Flex className={styles.actions} justify="center" align="center" gap={16}>
         <Button type="default" onClick={handleIpcExample}>
           IPC通讯示例
         </Button>
+        <Button type="default" onClick={() => handleDevTools('title')}>
+          打开调试控制台（标题）
+        </Button>
+        <Button type="default" onClick={() => handleDevTools('view')}>
+          打开调试控制台（主窗口）
+        </Button>
+      </Flex>
+      <div className={styles.cursor}>
         <Tag>
           当前指针坐标 [{cursorPosition.x}, {cursorPosition.y}]
         </Tag>

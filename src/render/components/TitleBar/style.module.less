@@ -1,7 +1,4 @@
 .title-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: calc(100% - 32px);
   height: calc(100% - 1px);
   padding: 0 16px;
@@ -9,11 +6,7 @@
   background-color: #00000068;
   -webkit-app-region: drag;
   &-main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100%;
-    gap: 8px;
     &-logo {
       width: 24px;
       height: 24px;
@@ -26,7 +19,7 @@
     }
     &-gradient {
       display: flex;
-      align-items: end;
+      align-items: baseline;
       background: linear-gradient(90deg, #ffffff 0%, #cccccc 10%, #cccccc 90%, #ffffff 100%);
       background-clip: text;
       -webkit-background-clip: text;
@@ -43,11 +36,7 @@
     }
   }
   &-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100%;
-    gap: 16px;
     -webkit-app-region: no-drag;
     &-button {
       display: flex;

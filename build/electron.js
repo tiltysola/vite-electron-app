@@ -57,13 +57,22 @@ if (process.env.NODE_ENV === 'production') {
     plugins: [{
       name: 'plugin-on-rebuild',
       setup(build) {
+        let lastestBuildTime = 0;
+        let isFirstBuild = true;
         build.onEnd(() => {
-          electron.restart();
+          if (Date.now() - lastestBuildTime > 1000) {
+            lastestBuildTime = Date.now();
+            if (isFirstBuild) {
+              isFirstBuild = false;
+              electron.start();
+            } else {
+              electron.restart();
+            }
+          }
         });
       },
     }]
   }).then((context) => {
-    electron.start();
     context.watch();
   });
   esbuild.build(preload_config);

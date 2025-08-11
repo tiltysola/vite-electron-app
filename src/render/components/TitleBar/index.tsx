@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Flex } from 'antd';
+import classNames from 'classnames';
 import packageJson from 'package.json';
 
 import { useIpcRenderer } from '@/hooks';
@@ -8,8 +10,7 @@ import Close from '../Icon/Close';
 import Maximize from '../Icon/Maximize';
 import Minimize from '../Icon/Minimize';
 import Minus from '../Icon/Minus';
-
-import './style.less';
+import styles from './style.module.less';
 
 const Index = () => {
   const [resizeStatus, setResizeStatus] = useState(false);
@@ -31,31 +32,37 @@ const Index = () => {
   });
 
   return (
-    <div className="title-bar">
-      <div className="title-bar-main">
-        <div className="title-bar-main-logo">
+    <Flex className={styles.titleBar} justify="space-between" align="center">
+      <Flex className={styles.titleBarMain} justify="center" align="center" gap={8}>
+        <div className={styles.titleBarMainLogo}>
           <img src="logo.png" alt="logo" />
         </div>
-        <div className="title-bar-main-gradient">
-          <span className="title-bar-main-title">Vite Electron App</span>
-          <span className="title-bar-main-subtitle">Ver. {packageJson.version}</span>
+        <div className={styles.titleBarMainGradient}>
+          <span className={styles.titleBarMainTitle}>Vite Electron App</span>
+          <span className={styles.titleBarMainSubtitle}>Ver. {packageJson.version}</span>
         </div>
-      </div>
-      <div className="title-bar-actions">
+      </Flex>
+      <Flex className={styles.titleBarActions} justify="center" align="center" gap={16}>
         <span
-          className="title-bar-actions-button title-bar-actions-minimize"
+          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsMinimize)}
           onClick={handleMinimize}
         >
           <Minus size={16} />
         </span>
-        <span className="title-bar-actions-button title-bar-actions-resize" onClick={handleResize}>
+        <span
+          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsResize)}
+          onClick={handleResize}
+        >
           {!resizeStatus ? <Maximize size={16} /> : <Minimize size={16} />}
         </span>
-        <span className="title-bar-actions-button title-bar-actions-close" onClick={handleShutdown}>
+        <span
+          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsClose)}
+          onClick={handleShutdown}
+        >
           <Close size={16} />
         </span>
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

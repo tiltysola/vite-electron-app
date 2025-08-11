@@ -32,6 +32,10 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       external: ['electron', 'path'],
+      input: {
+        main: path.resolve(__dirname, 'src/render/index.html'),
+        title: path.resolve(__dirname, 'src/render/title.html'),
+      },
     },
     chunkSizeWarningLimit: 10240,
   },

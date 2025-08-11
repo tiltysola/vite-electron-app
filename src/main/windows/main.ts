@@ -73,10 +73,6 @@ export const createWindow = () => {
   });
 
   baseWindow.on('resize', resize);
-
-  view.webContents.openDevTools({
-    mode: 'detach',
-  });
 };
 
 export default createWindow;
