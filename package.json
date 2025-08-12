@@ -33,7 +33,8 @@
     "productName": "<replace to your product name>",
     "copyright": "<replace to your copyright>",
     "mac": {
-      "icon": "build/icons/mac/icon.icns"
+      "icon": "build/icons/mac/icon.icns",
+      "identity": null
     },
     "win": {
       "icon": "build/icons/win/icon.ico"
