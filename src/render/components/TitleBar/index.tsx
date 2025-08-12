@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
 import { Flex } from 'antd';
-import classNames from 'classnames';
-import packageJson from 'package.json';
 
 import { useIpcRenderer } from '@/hooks';
 
@@ -32,33 +30,15 @@ const Index = () => {
   });
 
   return (
-    <Flex className={styles.titleBar} justify="space-between" align="center">
-      <Flex className={styles.titleBarMain} justify="center" align="center" gap={8}>
-        <div className={styles.titleBarMainLogo}>
-          <img src="logo.png" alt="logo" />
-        </div>
-        <div className={styles.titleBarMainGradient}>
-          <span className={styles.titleBarMainTitle}>Vite Electron App</span>
-          <span className={styles.titleBarMainSubtitle}>Ver. {packageJson.version}</span>
-        </div>
-      </Flex>
+    <Flex className={styles.titleBar} justify="end" align="center" gap={16}>
       <Flex className={styles.titleBarActions} justify="center" align="center" gap={16}>
-        <span
-          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsMinimize)}
-          onClick={handleMinimize}
-        >
+        <span className={styles.titleBarButton} onClick={handleMinimize}>
           <Minus size={16} />
         </span>
-        <span
-          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsResize)}
-          onClick={handleResize}
-        >
+        <span className={styles.titleBarButton} onClick={handleResize}>
           {!resizeStatus ? <Maximize size={16} /> : <Minimize size={16} />}
         </span>
-        <span
-          className={classNames(styles.titleBarActionsButton, styles.titleBarActionsClose)}
-          onClick={handleShutdown}
-        >
+        <span className={styles.titleBarButton} onClick={handleShutdown}>
           <Close size={16} />
         </span>
       </Flex>

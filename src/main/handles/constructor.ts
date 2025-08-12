@@ -1,8 +1,9 @@
 import { ipcMain as _ipcMain } from 'electron';
 
-import logger from './logger';
+import logger from '../utils/logger';
 
-export const ipcMain = {
+// IpcMain: Package ipcMain to log the channel and listener.
+export default {
   on: (channel: string, listener: (event: Electron.IpcMainEvent, ...args: any[]) => void) => {
     logger.info('[IpcMain]', `Registered \`${channel}\` channel & eventListener.`);
     _ipcMain.on(channel, listener);
@@ -15,3 +16,4 @@ export const ipcMain = {
     _ipcMain.handle(channel, listener);
   },
 };
+// IpcMain: end

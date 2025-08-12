@@ -4,8 +4,9 @@ import path from 'path';
 import { loadContent } from '../utils/loader';
 
 export let baseWindow: BaseWindow;
-export let titleBar: WebContentsView;
 export let view: WebContentsView;
+export let titleBar: WebContentsView;
+export let sideBar: WebContentsView;
 
 const WIDTH = 800;
 const HEIGHT = 600;
@@ -27,16 +28,6 @@ export const createWindow = () => {
     show: false,
   });
 
-  titleBar = new WebContentsView({
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
-    },
-  });
-  loadContent(titleBar.webContents, 'title');
-  baseWindow.contentView.addChildView(titleBar);
-  titleBar.setBackgroundColor('#00000000');
-
   view = new WebContentsView({
     webPreferences: {
       nodeIntegration: false,
@@ -47,9 +38,30 @@ export const createWindow = () => {
   baseWindow.contentView.addChildView(view);
   view.setBackgroundColor('#00000000');
 
+  titleBar = new WebContentsView({
+    webPreferences: {
+      nodeIntegration: false,
+      preload: path.join(__dirname, './preload.js'),
+    },
+  });
+  loadContent(titleBar.webContents, 'title');
+  baseWindow.contentView.addChildView(titleBar);
+  titleBar.setBackgroundColor('#00000000');
+
+  sideBar = new WebContentsView({
+    webPreferences: {
+      nodeIntegration: false,
+      preload: path.join(__dirname, './preload.js'),
+    },
+  });
+  loadContent(sideBar.webContents, 'side');
+  baseWindow.contentView.addChildView(sideBar);
+  sideBar.setBackgroundColor('#00000000');
+
   Promise.all([
-    new Promise((resolve) => titleBar.webContents.on('did-finish-load', () => resolve(true))),
     new Promise((resolve) => view.webContents.on('did-finish-load', () => resolve(true))),
+    new Promise((resolve) => titleBar.webContents.on('did-finish-load', () => resolve(true))),
+    new Promise((resolve) => sideBar.webContents.on('did-finish-load', () => resolve(true))),
   ]).then(() => baseWindow.show());
 
   const resize = () => {
@@ -58,8 +70,9 @@ export const createWindow = () => {
     const safeWidth = Math.min(bounds.width, screenWidth);
     const safeHeight = Math.min(bounds.height, screenHeight);
 
-    titleBar.setBounds({ x: 0, y: 0, width: safeWidth, height: 42 });
-    view.setBounds({ x: 0, y: 42, width: safeWidth, height: safeHeight - 42 });
+    view.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: safeHeight });
+    titleBar.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: 42 });
+    sideBar.setBounds({ x: 0, y: 0, width: 64, height: safeHeight });
   };
   resize();
 

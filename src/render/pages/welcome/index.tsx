@@ -14,7 +14,7 @@ const Index = () => {
     navigate('/example');
   };
 
-  const handleDevTools = (type: 'title' | 'view') => {
+  const handleDevTools = (type: 'title' | 'side' | 'view') => {
     ipcRenderer.invoke('funOpenDevTools', type);
   };
 
@@ -25,10 +25,10 @@ const Index = () => {
           <img src="logo.png" />
         </div>
         <div className={styles.title}>
-          <span>基于Electron构建的客户端</span>
+          <span>Vite Electron App</span>
         </div>
         <div className={styles.content}>
-          <span>欢迎体验由Electron技术驱动的客户端</span>
+          <span>Powered by Vite & Electron</span>
         </div>
       </div>
     );
@@ -66,15 +66,18 @@ const Index = () => {
           IPC通讯示例
         </Button>
         <Button type="default" onClick={() => handleDevTools('title')}>
-          打开调试控制台（标题）
+          调试工具 (标题)
+        </Button>
+        <Button type="default" onClick={() => handleDevTools('side')}>
+          调试工具 (侧边栏)
         </Button>
         <Button type="default" onClick={() => handleDevTools('view')}>
-          打开调试控制台（主窗口）
+          调试工具 (主窗口)
         </Button>
       </Flex>
       <div className={styles.cursor}>
-        <Tag>
-          当前指针坐标 [{cursorPosition.x}, {cursorPosition.y}]
+        <Tag color="black" bordered={false}>
+          [{cursorPosition.x}, {cursorPosition.y}]
         </Tag>
       </div>
     </div>

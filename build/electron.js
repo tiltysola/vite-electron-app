@@ -16,11 +16,10 @@ const localPkgJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package
 
 const input_dir = path.join(__dirname, '../src/main/background.ts');
 const input_preload = path.join(__dirname, '../src/main/preload.ts');
-const handles_dir = path.join(__dirname, '../src/main/handles/*.ts');
 const output_dir = path.join(__dirname, '../dist/main/background.js');
 
 const common_config = {
-  entryPoints: [input_dir, handles_dir],
+  entryPoints: [input_dir],
   bundle: true,
   format: 'esm',
   platform: 'node',

@@ -1,9 +1,9 @@
 import { screen } from 'electron';
 
-import { ipcMain } from '../utils/ipc';
-import { titleBar, view } from '../windows/main';
+import { sideBar, titleBar, view } from '../windows/main';
+import ipcMain from './constructor';
 
-const fun = () => {
+export default () => {
   ipcMain.on('funSayHello', (e, data) => {
     setTimeout(() => {
       e.reply('funReplyHello', `接收到了一条长度为${data.content.length}的消息`);
@@ -19,6 +19,10 @@ const fun = () => {
       titleBar.webContents.openDevTools({
         mode: 'detach',
       });
+    } else if (data === 'side') {
+      sideBar.webContents.openDevTools({
+        mode: 'detach',
+      });
     } else if (data === 'view') {
       view.webContents.openDevTools({
         mode: 'detach',
@@ -31,5 +35,3 @@ const fun = () => {
     return { ...primaryDisplay.bounds, ...screen.getCursorScreenPoint() };
   });
 };
-
-export default fun;

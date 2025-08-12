@@ -1,8 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 
-import { ipcMain } from '../utils/ipc';
+import ipcMain from './constructor';
 
-const control = () => {
+export default () => {
   ipcMain.on('controlMinimize', (e) => {
     const currentWindow = BrowserWindow.fromWebContents(e.sender)!;
     currentWindow.minimize();
@@ -30,5 +30,3 @@ const control = () => {
     app.exit();
   });
 };
-
-export default control;
