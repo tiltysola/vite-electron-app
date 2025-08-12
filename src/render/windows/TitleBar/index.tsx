@@ -4,10 +4,11 @@ import { Flex } from 'antd';
 
 import { useIpcRenderer } from '@/hooks';
 
-import Close from '../Icon/Close';
-import Maximize from '../Icon/Maximize';
-import Minimize from '../Icon/Minimize';
-import Minus from '../Icon/Minus';
+import Close from '@/components/Icon/Close';
+import Maximize from '@/components/Icon/Maximize';
+import Minimize from '@/components/Icon/Minimize';
+import Minus from '@/components/Icon/Minus';
+
 import styles from './style.module.less';
 
 const Index = () => {
@@ -21,8 +22,8 @@ const Index = () => {
     ipcRenderer.send('controlResize');
   };
 
-  const handleShutdown = () => {
-    ipcRenderer.send('controlShutdown');
+  const handleClose = () => {
+    ipcRenderer.send('controlClose');
   };
 
   useIpcRenderer.on('controlResizeStatus', (e, res) => {
@@ -38,7 +39,7 @@ const Index = () => {
         <span className={styles.titleBarButton} onClick={handleResize}>
           {!resizeStatus ? <Maximize size={16} /> : <Minimize size={16} />}
         </span>
-        <span className={styles.titleBarButton} onClick={handleShutdown}>
+        <span className={styles.titleBarButton} onClick={handleClose}>
           <Close size={16} />
         </span>
       </Flex>

@@ -1,5 +1,6 @@
-import { screen } from 'electron';
+import { BrowserWindow, screen } from 'electron';
 
+import createAlertWindow from '../windows/alert';
 import { sideBar, titleBar, view } from '../windows/main';
 import ipcMain from './constructor';
 
@@ -28,6 +29,23 @@ export default () => {
         mode: 'detach',
       });
     }
+  });
+
+  ipcMain.handle('funOpenAlert', (e, data) => {
+    const { title, content } = data;
+    const currentWindow = BrowserWindow.fromWebContents(e.sender)!;
+    createAlertWindow({
+      title,
+      content,
+      parent: currentWindow,
+    });
+  });
+
+  ipcMain.handle('funSetHeight', (e, data) => {
+    const { height } = data;
+    const safeHeight = Math.max(96, height);
+    const currentWindow = BrowserWindow.fromWebContents(e.sender)!;
+    currentWindow.setSize(currentWindow.getBounds().width, safeHeight + 64);
   });
 
   ipcMain.handle('funCursorPosition', () => {

@@ -1,0 +1,32 @@
+.icon-terminal {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    .terminal-underline {
+      animation: terminal-underline 1s infinite;
+    }
+  }
+}
+
+@keyframes terminal-underline {
+  0% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,51 @@
+.alert {
+  height: 100%;
+  &-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 160px);
+    height: 30px;
+    padding: 2px 12px 0 12px;
+    background: linear-gradient(90deg, #000000 0%, #333333 10%, #333333 90%, #000000 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: title-bar-gradient 10s infinite linear;
+    background-size: 200% 100%;
+    &-text {
+      font-size: 16px;
+      font-weight: bold;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    height: calc(100% - 40px);
+    margin-top: 32px;
+    margin-bottom: 8px;
+    padding: 0 12px;
+    &-text {
+      font-size: 14px;
+      color: #333;
+      word-break: break-all;
+    }
+  }
+}
+
+@keyframes title-bar-gradient {
+  from {
+    background-position: 20% 0;
+  }
+
+  25% {
+    background-position: -120% 0;
+  }
+
+  to {
+    background-position: -120% 0;
+  }
+}

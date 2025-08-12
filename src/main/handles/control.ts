@@ -25,6 +25,11 @@ export default () => {
     e.reply('controlResizeStatus', isMaximized);
   });
 
+  ipcMain.on('controlClose', (e) => {
+    const currentWindow = BrowserWindow.fromWebContents(e.sender)!;
+    currentWindow.close();
+  });
+
   ipcMain.on('controlShutdown', () => {
     app.quit();
     app.exit();

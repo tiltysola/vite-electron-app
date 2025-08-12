@@ -3,10 +3,19 @@ import { useEffect, useState } from 'react';
 import { Flex } from 'antd';
 import classNames from 'classnames';
 
+import Terminal from '@/components/Icon/Terminal';
+
 import styles from './style.module.less';
 
 const Index = () => {
   const [os, setOs] = useState('win32');
+
+  const handleTerminal = () => {
+    ipcRenderer.invoke('funOpenAlert', {
+      title: '调试控制台',
+      content: '您正在打开调试控制台，请稍后...',
+    });
+  };
 
   useEffect(() => {
     ipcRenderer.invoke('utilGetOs').then((res) => {
@@ -25,7 +34,9 @@ const Index = () => {
         <img src="logo.png" alt="logo" />
       </div>
       <div className={styles.sideBarActions}>
-        <span>{os}</span>
+        <span className={styles.sideBarButton} onClick={handleTerminal}>
+          <Terminal size={20} />
+        </span>
       </div>
     </Flex>
   );

@@ -1,0 +1,44 @@
+.side-bar {
+  width: 100%;
+  height: calc(100% - 32px);
+  padding: 16px 0;
+  -webkit-app-region: drag;
+  &.win32 {
+    background-color: #ffffff88;
+  }
+  &.darwin {
+    background-color: #00000028;
+  }
+  &-logo {
+    width: 40px;
+    height: 40px;
+    filter: grayscale(100%) brightness(0);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  &-actions {
+    -webkit-app-region: no-drag;
+  }
+  &-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 0;
+    font-size: 16px;
+    color: #ffffff;
+    transition: all 0.3s;
+    opacity: 0.6;
+    filter: invert(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+    &:active {
+      scale: 0.9;
+    }
+  }
+}
