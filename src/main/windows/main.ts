@@ -1,24 +1,30 @@
 import { BaseWindow, screen, WebContentsView } from 'electron';
 import path from 'path';
 
+import { loadContent } from '../utils/loader';
+
 export let baseWindow: BaseWindow;
 export let titleBar: WebContentsView;
 export let view: WebContentsView;
+
+const WIDTH = 800;
+const HEIGHT = 600;
 
 export const createWindow = () => {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
 
   baseWindow = new BaseWindow({
-    width: 800,
-    height: 600,
+    width: WIDTH,
+    height: HEIGHT,
     frame: false,
     vibrancy: 'fullscreen-ui',
     backgroundMaterial: 'acrylic',
-    minWidth: 800,
-    minHeight: 600,
+    minWidth: WIDTH,
+    minHeight: HEIGHT,
     maxWidth: screenWidth,
     maxHeight: screenHeight,
+    show: false,
   });
 
   titleBar = new WebContentsView({
@@ -27,13 +33,7 @@ export const createWindow = () => {
       preload: path.join(__dirname, './preload.js'),
     },
   });
-  switch (process.env.ENV) {
-    case 'production':
-      titleBar.webContents.loadFile(path.join(__dirname, '../render/title.html'));
-      break;
-    default:
-      titleBar.webContents.loadURL(`http://localhost:${process.env.PORT}/title.html`);
-  }
+  loadContent(titleBar.webContents, 'title');
   baseWindow.contentView.addChildView(titleBar);
   titleBar.setBackgroundColor('#00000000');
 
@@ -43,15 +43,14 @@ export const createWindow = () => {
       preload: path.join(__dirname, './preload.js'),
     },
   });
-  switch (process.env.ENV) {
-    case 'production':
-      view.webContents.loadFile(path.join(__dirname, '../render/index.html'));
-      break;
-    default:
-      view.webContents.loadURL(`http://localhost:${process.env.PORT}`);
-  }
+  loadContent(view.webContents, 'index');
   baseWindow.contentView.addChildView(view);
   view.setBackgroundColor('#00000000');
+
+  Promise.all([
+    new Promise((resolve) => titleBar.webContents.on('did-finish-load', () => resolve(true))),
+    new Promise((resolve) => view.webContents.on('did-finish-load', () => resolve(true))),
+  ]).then(() => baseWindow.show());
 
   const resize = () => {
     const bounds = baseWindow.getBounds();

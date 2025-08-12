@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import fs from 'fs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -32,10 +33,17 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       external: ['electron', 'path'],
-      input: {
-        main: path.resolve(__dirname, 'src/render/index.html'),
-        title: path.resolve(__dirname, 'src/render/title.html'),
-      },
+      input: fs
+        .readdirSync(path.resolve(__dirname, 'src/render'))
+        .filter((file) => file.endsWith('.html'))
+        .reduce(
+          (acc, file) => {
+            const name = path.basename(file, '.html');
+            acc[name] = path.resolve(__dirname, 'src/render', file);
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
     },
     chunkSizeWarningLimit: 10240,
   },

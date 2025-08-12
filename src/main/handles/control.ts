@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 
-import ipcMain from './constructor';
+import { ipcMain } from '../utils/ipc';
 
 const control = () => {
   ipcMain.on('controlMinimize', (e) => {

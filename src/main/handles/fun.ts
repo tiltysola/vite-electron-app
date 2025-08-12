@@ -1,5 +1,6 @@
-import { ipcMain, screen } from 'electron';
+import { screen } from 'electron';
 
+import { ipcMain } from '../utils/ipc';
 import { titleBar, view } from '../windows/main';
 
 const fun = () => {

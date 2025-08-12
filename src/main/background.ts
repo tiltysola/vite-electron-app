@@ -1,8 +1,8 @@
 import { app, BaseWindow } from 'electron';
+import path from 'path';
 
-import ipcControl from './handles/control';
-import ipcFun from './handles/fun';
 import tray from './services/tray';
+import { loadHandles } from './utils/loader';
 import { baseWindow } from './windows/main';
 import createWindow from './windows/main';
 
@@ -55,8 +55,7 @@ app.whenReady().then(() => {
   /* SecondInstance: end */
 
   /* IpcSection: communication with frontend. */
-  ipcControl();
-  ipcFun();
+  loadHandles(path.join(__dirname, './handles'));
   /* IpcSection: end */
 
   /* SystemTray: start */
