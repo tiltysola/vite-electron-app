@@ -10,9 +10,7 @@ const _ipcRenderer = {
     ipcRenderer.send(channel, ...args);
   },
   invoke: (channel: string, ...args: any[]) => {
-    if (channel !== 'util_cursor_position') {
-      console.log('[IpcMain]', `Channel: \`${channel}\`,`, 'Direction: Invoke.');
-    }
+    console.log('[IpcMain]', `Channel: \`${channel}\`,`, 'Direction: Invoke.');
     return ipcRenderer.invoke(channel, ...args);
   },
   on: (channel: string, callback: (event: IpcRendererEvent, ...args: any[]) => void) => {

@@ -14,16 +14,16 @@ const electron = electronConnect.server.create({
 
 const localPkgJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
 
-const input_dir = path.join(__dirname, '../src/main/background.ts');
-const input_preload = path.join(__dirname, '../src/main/preload.ts');
-const output_dir = path.join(__dirname, '../dist/main/background.js');
+const inputDir = path.join(__dirname, '../src/main/background.ts');
+const inputPreload = path.join(__dirname, '../src/main/preload.ts');
+const outputDir = path.join(__dirname, '../dist/main/background.js');
 
-const common_config = {
-  entryPoints: [input_dir],
+const commonConfig = {
+  entryPoints: [inputDir],
   bundle: true,
   format: 'esm',
   platform: 'node',
-  outdir: path.join(output_dir, '../'),
+  outdir: path.join(outputDir, '../'),
   external: Object.keys({
     ...(localPkgJson.dependencies || {}),
     ...(localPkgJson.devDependencies || {}),
@@ -31,24 +31,24 @@ const common_config = {
   }),
 };
 
-const preload_config = {
-  ...common_config,
-  entryPoints: [input_preload],
+const preloadConfig = {
+  ...commonConfig,
+  entryPoints: [inputPreload],
   format: 'cjs',
 };
 
 if (process.env.NODE_ENV === 'production') {
   esbuild.build({
-    ...common_config,
+    ...commonConfig,
     define: {
       '__dirname': JSON.stringify(path.join(__dirname, '../dist/main')),
       'process.env.ENV': "'production'",
     },
   });
-  esbuild.build(preload_config);
+  esbuild.build(preloadConfig);
 } else {
   esbuild.context({
-    ...common_config,
+    ...commonConfig,
     define: {
       '__dirname': JSON.stringify(path.join(__dirname, '../dist/main')),
       'process.env.ENV': "'development'",
@@ -75,5 +75,5 @@ if (process.env.NODE_ENV === 'production') {
   }).then((context) => {
     context.watch();
   });
-  esbuild.build(preload_config);
+  esbuild.build(preloadConfig);
 }
