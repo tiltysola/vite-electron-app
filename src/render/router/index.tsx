@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Example from '@/pages/Example';
-import Notfound from '@/pages/Notfound';
+import Notfound from '@/pages/NotFound';
 import Welcome from '@/pages/Welcome';
 
 const Index = () => {
