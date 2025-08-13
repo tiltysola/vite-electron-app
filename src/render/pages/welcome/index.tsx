@@ -14,8 +14,31 @@ const Index = () => {
     navigate('/example');
   };
 
-  const handleDevTools = (type: 'title' | 'side' | 'view') => {
-    ipcRenderer.invoke('funOpenDevTools', type);
+  const handleCopilot = () => {
+    navigate('/copilot');
+  };
+
+  const handleOpenAlert = () => {
+    electronAlert
+      .open({
+        title: '提示',
+        content: '这是一个弹窗提示。',
+        okText: '确认',
+        cancelText: '取消',
+      })
+      .then((res) => {
+        if (res) {
+          electronAlert.open({
+            title: '提示',
+            content: '你点击了确认',
+          });
+        } else {
+          electronAlert.open({
+            title: '提示',
+            content: '你点击了取消或者关闭按钮',
+          });
+        }
+      });
   };
 
   const FreeComp = () => {
@@ -65,14 +88,11 @@ const Index = () => {
         <Button type="default" onClick={handleIpcExample}>
           IPC通讯示例
         </Button>
-        <Button type="default" onClick={() => handleDevTools('title')}>
-          调试工具 (标题)
+        <Button type="default" onClick={handleCopilot}>
+          大模型对话
         </Button>
-        <Button type="default" onClick={() => handleDevTools('side')}>
-          调试工具 (侧边栏)
-        </Button>
-        <Button type="default" onClick={() => handleDevTools('view')}>
-          调试工具 (主窗口)
+        <Button type="default" onClick={handleOpenAlert}>
+          打开弹窗提示
         </Button>
       </Flex>
       <div className={styles.cursor}>

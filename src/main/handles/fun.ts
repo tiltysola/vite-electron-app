@@ -11,7 +11,8 @@ export default () => {
   });
 
   ipcMain.handle('funInvoke', (e, data) => {
-    return `接收到了一条长度为${data.content.length}的消息`;
+    const { content } = data;
+    return `接收到了一条长度为${content.length}的消息`;
   });
 
   ipcMain.handle('funOpenDevTools', (e, data) => {

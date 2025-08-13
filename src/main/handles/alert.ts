@@ -18,10 +18,10 @@ export default () => {
 
   ipcMain.handle('alertSetHeight', (e, data) => {
     const { height } = data;
-    const safeHeight = Math.max(64, height);
+    const safeHeight = Math.max(48, height);
     const currentWindow = BrowserWindow.fromWebContents(e.sender);
     if (currentWindow && !currentWindow.isDestroyed()) {
-      currentWindow.setSize(currentWindow.getBounds().width, safeHeight + 96);
+      currentWindow.setSize(currentWindow.getBounds().width, safeHeight + 112);
     }
   });
 };

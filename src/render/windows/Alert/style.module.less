@@ -5,8 +5,8 @@
     top: 0;
     left: 0;
     width: calc(100% - 160px);
-    height: 26px;
-    padding: 6px 12px 0 12px;
+    height: 24px;
+    padding: 8px 12px 0 12px;
     background: linear-gradient(90deg, #000000 0%, #333333 10%, #333333 90%, #000000 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -22,26 +22,25 @@
     }
   }
   &-content {
-    display: flex;
-    align-items: center;
-    height: calc(100% - 40px);
-    margin-top: 24px;
-    margin-bottom: 16px;
-    padding: 0 12px;
+    width: calc(100% - 24px);
+    height: calc(100% - 56px);
+    margin-top: 32px;
+    padding: 12px;
+    gap: 16px;
     &-text {
+      width: 100%;
+      height: 100%;
       font-size: 14px;
       color: #333;
       word-break: break-all;
     }
-  }
-  &-buttons {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 12px;
-    :global {
-      .ant-btn {
-        height: 28px;
+    &-buttons {
+      width: 100%;
+      flex: 0;
+      :global {
+        .ant-btn {
+          height: 28px;
+        }
       }
     }
   }

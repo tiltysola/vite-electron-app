@@ -13,17 +13,7 @@ const App = () => {
   const [os, setOs] = useState('win32');
 
   const handleTerminal = () => {
-    electronAlert
-      .open({
-        title: '调试控制台',
-        content: '您正在打开调试控制台，请稍后...',
-        okText: '确定',
-      })
-      .then((res) => {
-        if (res) {
-          ipcRenderer.invoke('funOpenDevTools', 'view');
-        }
-      });
+    ipcRenderer.invoke('funOpenDevTools', 'view');
   };
 
   useEffect(() => {

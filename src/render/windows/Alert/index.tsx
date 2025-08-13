@@ -34,21 +34,23 @@ const App = () => {
       <Flex className={classNames(styles.alertTitle)} align="center">
         <span className={styles.alertTitleText}>{title}</span>
       </Flex>
-      <div className={styles.alertContent}>
-        <span ref={contentRef} className={styles.alertContentText}>
-          {content}
-        </span>
-      </div>
-      <Flex className={styles.alertButtons} justify="center" align="center" gap={12}>
-        {okText && (
-          <Button type="primary" onClick={handleOk}>
-            {okText}
-          </Button>
-        )}
-        {cancelText && (
-          <Button type="default" onClick={handleCancel}>
-            {cancelText}
-          </Button>
+      <Flex className={styles.alertContent} vertical justify="space-between" align="center">
+        <Flex className={styles.alertContentText} justify="center" align="center">
+          <span ref={contentRef}>{content}</span>
+        </Flex>
+        {(okText || cancelText) && (
+          <Flex className={styles.alertContentButtons} justify="end" align="center" gap={12}>
+            {okText && (
+              <Button type="primary" onClick={handleOk}>
+                {okText}
+              </Button>
+            )}
+            {cancelText && (
+              <Button type="default" onClick={handleCancel}>
+                {cancelText}
+              </Button>
+            )}
+          </Flex>
         )}
       </Flex>
     </Flex>
