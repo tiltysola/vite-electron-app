@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { Flex } from 'antd';
-
-import { useIpcRenderer } from '@/hooks';
 
 import Close from '@/components/Icon/Close';
 import Maximize from '@/components/Icon/Maximize';
@@ -20,20 +18,22 @@ const App = () => {
   const { disableMinimize, disableMaximize } = JSON.parse(searchParams.get('props') || '{}');
 
   const handleMinimize = () => {
-    ipcRenderer.send('controlMinimize');
+    ipcRenderer.invoke('controlMinimize');
   };
 
   const handleResize = () => {
-    ipcRenderer.send('controlResize');
+    ipcRenderer.invoke('controlResize');
   };
 
   const handleClose = () => {
-    ipcRenderer.send('controlClose');
+    ipcRenderer.invoke('controlClose');
   };
 
-  useIpcRenderer.on('controlResizeStatus', (e, res) => {
-    setResizeStatus(res);
-  });
+  useEffect(() => {
+    ipcRenderer.invoke('controlResizeStatus').then((res) => {
+      setResizeStatus(res);
+    });
+  }, []);
 
   return (
     <Flex className={styles.titleBar} justify="end" align="center" gap={16}>

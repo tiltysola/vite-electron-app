@@ -19,6 +19,9 @@
       object-fit: contain;
     }
   }
+  &-menu {
+    -webkit-app-region: no-drag;
+  }
   &-actions {
     -webkit-app-region: no-drag;
   }
@@ -39,6 +42,9 @@
     }
     &:active {
       scale: 0.9;
+    }
+    &.active {
+      opacity: 1;
     }
   }
 }

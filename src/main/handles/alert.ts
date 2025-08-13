@@ -20,7 +20,7 @@ export default () => {
     const { height } = data;
     const safeHeight = Math.max(48, height);
     const currentWindow = BrowserWindow.fromWebContents(e.sender);
-    if (currentWindow && !currentWindow.isDestroyed()) {
+    if (currentWindow != null && !currentWindow.isDestroyed()) {
       currentWindow.setSize(currentWindow.getBounds().width, safeHeight + 112);
     }
   });

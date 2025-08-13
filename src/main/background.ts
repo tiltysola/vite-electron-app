@@ -3,6 +3,7 @@ import { app, BaseWindow } from 'electron';
 import ipcAlert from './handles/alert';
 import ipcControl from './handles/control';
 import ipcFun from './handles/fun';
+import ipcRouter from './handles/router';
 import ipcUtil from './handles/util';
 import tray from './services/tray';
 import { baseWindow } from './windows/main';
@@ -48,7 +49,7 @@ app.whenReady().then(() => {
 
   /* SecondInstance: when second instance started, quit and focus the first instance. */
   app.on('second-instance', () => {
-    if (baseWindow && !baseWindow.isDestroyed()) {
+    if (baseWindow != null && !baseWindow.isDestroyed()) {
       baseWindow.focus();
     } else {
       createWindow();
@@ -59,6 +60,7 @@ app.whenReady().then(() => {
   /* IpcSection: communication with frontend. */
   ipcAlert();
   ipcControl();
+  ipcRouter();
   ipcUtil();
   ipcFun();
   /* IpcSection: end */

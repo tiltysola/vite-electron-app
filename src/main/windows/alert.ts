@@ -107,6 +107,12 @@ export const createWindow = (props: AlertWindowProps): Promise<boolean> => {
     });
 
     baseWindow.on('resize', resize);
+
+    baseWindow.on('close', () => {
+      if (parent != null && !parent.isDestroyed()) {
+        parent.focus();
+      }
+    });
   });
 };
 

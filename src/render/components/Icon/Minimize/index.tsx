@@ -9,9 +9,11 @@ interface IconProps {
 }
 
 const Index = ({ className, style, size = 16 }: IconProps) => (
-  <span className={className} style={{ width: size, height: size + 2 }}>
+  <span
+    className={classNames(styles.iconMinimize, className)}
+    style={{ width: size, height: size + 2 }}
+  >
     <svg
-      className={styles.iconMinimize}
       style={{ width: size, height: size, ...style }}
       viewBox="0 0 80 80"
       fill="none"

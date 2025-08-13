@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import styles from './style.module.less';
 
 interface IconProps {
@@ -5,10 +7,13 @@ interface IconProps {
   style?: React.CSSProperties;
   size?: number;
 }
+
 const Index = ({ className, style, size = 16 }: IconProps) => (
-  <span className={className} style={{ width: size, height: size + 2 }}>
+  <span
+    className={classNames(styles.iconTerminal, className)}
+    style={{ width: size, height: size + 2 }}
+  >
     <svg
-      className={styles.iconTerminal}
       style={{ width: size, height: size, ...style }}
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"

@@ -14,7 +14,7 @@ export default () => {
     {
       label: '打开应用',
       click: () => {
-        if (baseWindow && !baseWindow.isDestroyed()) {
+        if (baseWindow != null && !baseWindow.isDestroyed()) {
           baseWindow.focus();
         } else {
           createWindow();
@@ -38,7 +38,7 @@ export default () => {
 
   /* DoubleClick: start */
   systemTray.on('double-click', () => {
-    if (baseWindow && !baseWindow.isDestroyed()) {
+    if (baseWindow != null && !baseWindow.isDestroyed()) {
       baseWindow.focus();
     } else {
       createWindow();
