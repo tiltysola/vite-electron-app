@@ -1,5 +1,6 @@
 import { app, BaseWindow } from 'electron';
 
+import ipcAlert from './handles/alert';
 import ipcControl from './handles/control';
 import ipcFun from './handles/fun';
 import ipcUtil from './handles/util';
@@ -56,6 +57,7 @@ app.whenReady().then(() => {
   /* SecondInstance: end */
 
   /* IpcSection: communication with frontend. */
+  ipcAlert();
   ipcControl();
   ipcUtil();
   ipcFun();

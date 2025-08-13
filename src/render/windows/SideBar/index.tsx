@@ -1,20 +1,29 @@
 import { useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { Flex } from 'antd';
 import classNames from 'classnames';
 
 import Terminal from '@/components/Icon/Terminal';
+import Provider from '@/components/Provider';
 
 import styles from './style.module.less';
 
-const Index = () => {
+const App = () => {
   const [os, setOs] = useState('win32');
 
   const handleTerminal = () => {
-    ipcRenderer.invoke('funOpenAlert', {
-      title: '调试控制台',
-      content: '您正在打开调试控制台，请稍后...',
-    });
+    electronAlert
+      .open({
+        title: '调试控制台',
+        content: '您正在打开调试控制台，请稍后...',
+        okText: '确定',
+      })
+      .then((res) => {
+        if (res) {
+          ipcRenderer.invoke('funOpenDevTools', 'view');
+        }
+      });
   };
 
   useEffect(() => {
@@ -42,4 +51,9 @@ const Index = () => {
   );
 };
 
-export default Index;
+const root = createRoot(document.getElementById('root')!);
+root.render(
+  <Provider>
+    <App />
+  </Provider>,
+);

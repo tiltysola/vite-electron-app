@@ -1,21 +1,32 @@
 import { useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 
-import { Flex } from 'antd';
+import { Button, Flex } from 'antd';
 import classNames from 'classnames';
+
+import Provider from '@/components/Provider';
 
 import styles from './style.module.less';
 
-const Index = () => {
+const App = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const searchParams = new URLSearchParams(window.location.search);
+  const { alertId, title, content, okText, cancelText } = JSON.parse(
+    searchParams.get('props') || '{}',
+  );
 
-  const title = searchParams.get('title');
-  const content = searchParams.get('content');
+  const handleOk = () => {
+    ipcRenderer.send(`alertResult-${alertId}`, true);
+  };
+
+  const handleCancel = () => {
+    ipcRenderer.send(`alertResult-${alertId}`, false);
+  };
 
   useEffect(() => {
     const height = contentRef.current?.clientHeight || 0;
-    ipcRenderer.invoke('funSetHeight', { height });
+    ipcRenderer.invoke('alertSetHeight', { height });
   }, [content]);
 
   return (
@@ -28,8 +39,25 @@ const Index = () => {
           {content}
         </span>
       </div>
+      <Flex className={styles.alertButtons} justify="center" align="center" gap={12}>
+        {okText && (
+          <Button type="primary" onClick={handleOk}>
+            {okText}
+          </Button>
+        )}
+        {cancelText && (
+          <Button type="default" onClick={handleCancel}>
+            {cancelText}
+          </Button>
+        )}
+      </Flex>
     </Flex>
   );
 };
 
-export default Index;
+const root = createRoot(document.getElementById('root')!);
+root.render(
+  <Provider>
+    <App />
+  </Provider>,
+);

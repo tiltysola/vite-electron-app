@@ -2,6 +2,8 @@
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
+import { AlertProps } from './windows/alert';
+
 const _ipcRenderer = {
   send: (channel: string, ...args: any[]) => {
     console.log('[IpcMain]', `Channel: \`${channel}\`,`, 'Direction: Renderer => Main.');
@@ -41,4 +43,13 @@ const _ipcRenderer = {
 
 export type IpcRenderer = Readonly<typeof _ipcRenderer>;
 
+const _electronAlert = {
+  open: (props: AlertProps) => {
+    return ipcRenderer.invoke('alertOpen', props);
+  },
+} as const;
+
+export type ElectronAlert = Readonly<typeof _electronAlert>;
+
 contextBridge.exposeInMainWorld('ipcRenderer', _ipcRenderer);
+contextBridge.exposeInMainWorld('electronAlert', _electronAlert);
