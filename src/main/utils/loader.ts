@@ -1,6 +1,8 @@
 import { WebContents } from 'electron';
 import path from 'path';
 
+const ELECTRON_RENDERER_URL = process.env.ELECTRON_RENDERER_URL || 'http://localhost:5173';
+
 export const loadContent = (
   webContents: WebContents,
   type: string,
@@ -12,6 +14,6 @@ export const loadContent = (
       webContents.loadFile(path.join(__dirname, `../render/${type}.html?${queryString || ''}`));
       break;
     default:
-      webContents.loadURL(`http://localhost:${process.env.PORT}/${type}.html?${queryString || ''}`);
+      webContents.loadURL(`${ELECTRON_RENDERER_URL}/${type}.html?${queryString || ''}`);
   }
 };

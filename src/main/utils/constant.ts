@@ -1,12 +1,9 @@
 import { app } from 'electron';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-export let APP_PATH = '';
+export const APP_PATH = path.join(app.getAppPath());
 
 export const DOC_PATH = app.getPath('documents');
 
-if (process.env.ENV !== 'development') {
-  APP_PATH = path.join(app.getAppPath(), '../../');
-} else {
-  APP_PATH = path.join(app.getAppPath());
-}
+export const ENTRY_PATH = path.join(fileURLToPath(import.meta.url), '../');

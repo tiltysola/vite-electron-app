@@ -1,21 +1,6 @@
-# Dependencies
-node_modules/
-
-# Build outputs
-dist/
-build/
-
-# Cache and logs
-.cache/
-*.log
-
-# Config files
-.eslintrc
-.gitignore
-.npmrc
-.prettierignore
-.prettierrc
-
-# System files
-.DS_Store
-Thumbs.db
+out
+dist
+pnpm-lock.yaml
+LICENSE.md
+tsconfig.json
+tsconfig.*.json

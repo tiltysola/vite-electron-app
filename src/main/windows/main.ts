@@ -25,13 +25,13 @@ export const createWindow = () => {
     minHeight: HEIGHT,
     maxWidth: screenWidth,
     maxHeight: screenHeight,
-    show: false,
+    show: true,
   });
 
   view = new WebContentsView({
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
+      preload: path.join(__dirname, '../preload/index.js'),
     },
   });
   loadContent(view.webContents, 'index');
@@ -41,7 +41,7 @@ export const createWindow = () => {
   titleBar = new WebContentsView({
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
+      preload: path.join(__dirname, '../preload/index.js'),
     },
   });
   loadContent(titleBar.webContents, 'title');
@@ -51,7 +51,7 @@ export const createWindow = () => {
   sideBar = new WebContentsView({
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
+      preload: path.join(__dirname, '../preload/index.js'),
     },
   });
   loadContent(sideBar.webContents, 'side');

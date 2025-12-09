@@ -1,5 +1,0 @@
-{
-  "watch": ["src/main"],
-  "ext": "ts,js,json",
-  "exec": "node build/electron.js && electron ."
-}

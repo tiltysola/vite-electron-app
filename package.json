@@ -1,8 +1,7 @@
 {
   "name": "vite-electron-app",
-  "version": "2.0.0",
-  "type": "module",
-  "main": "dist/main/background.js",
+  "version": "1.0.0",
+  "main": "./out/main/index.js",
   "description": "vite-electron-app",
   "homepage": "https://github.com/tiltysola/vite-electron-app",
   "license": "MIT",
@@ -14,95 +13,53 @@
     "url": "https://github.com/tiltysola/vite-electron-app.git"
   },
   "scripts": {
-    "dev": "concurrently -k -n=react,electron -c=green,blue \"npm run dev:react\" \"npm run dev:electron\"",
-    "dev:react": "vite",
-    "dev:electron": "cross-env NODE_ENV=development node build/electron.js && nodemon",
-    "build": "npm run build:react && npm run build:electron",
-    "build:react": "vite build",
-    "build:electron": "cross-env NODE_ENV=production node build/electron.js && electron-builder build --publish never",
-    "serve:react": "vite preview",
-    "clean": "rm -rf dist",
-    "fix": "npm run prettier && npm run lint:fix",
-    "prettier": "prettier --write .",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "convert-icons": "node build/convert-icons.js"
-  },
-  "build": {
-    "appId": "<replace to your app id>",
-    "productName": "<replace to your product name>",
-    "copyright": "<replace to your copyright>",
-    "mac": {
-      "icon": "build/icons/mac/icon.icns",
-      "identity": null
-    },
-    "win": {
-      "icon": "build/icons/win/icon.ico"
-    },
-    "linux": {
-      "icon": "build/icons/png/512x512.png"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "perMachine": true,
-      "deleteAppDataOnUninstall": false,
-      "include": "build/installer.nsh"
-    },
-    "files": [
-      "node_modules",
-      "dist/main/**",
-      "dist/render/**"
-    ],
-    "electronDownload": {
-      "mirror": "https://npmmirror.com/mirrors/electron/"
-    },
-    "nsisWeb": {
-      "appPackageUrl": "https://npmmirror.com/mirrors/electron-builder-binaries/"
-    }
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev --watch",
+    "build": "npm run typecheck && electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "fix": "eslint --fix ."
   },
   "dependencies": {
-    "@ant-design/icons": "^6.0.0",
-    "@ant-design/v5-patch-for-react-19": "^1.0.3",
-    "@ant-design/x": "^1.6.0",
-    "antd": "^5.26.7",
-    "chalk": "^5.5.0",
+    "@ant-design/x": "^2.1.0",
+    "antd": "^6.1.0",
     "classnames": "^2.5.1",
-    "dayjs": "^1.11.13",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "dayjs": "^1.11.19",
+    "electron-updater": "^6.3.9",
+    "less": "^4.4.2",
     "react-error-boundary": "^6.0.0",
-    "react-router-dom": "^7.8.0"
+    "react-router-dom": "^7.10.1",
+    "vite-plugin-html": "^3.2.2"
   },
   "devDependencies": {
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
-    "@types/react-router-dom": "^5.3.3",
-    "@typescript-eslint/eslint-plugin": "^8.39.0",
-    "@typescript-eslint/parser": "^8.39.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "concurrently": "^9.2.0",
-    "cross-env": "^10.0.0",
-    "electron": "^37.2.6",
+    "@electron-toolkit/tsconfig": "^2.0.0",
+    "@types/node": "^22.19.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "electron": "^39.2.6",
     "electron-builder": "^26.0.12",
-    "electron-connect": "^0.6.3",
-    "esbuild": "^0.25.8",
-    "eslint": "^9.33.0",
-    "eslint-config-ali": "^16.3.0",
+    "electron-vite": "^5.0.0",
+    "eslint": "^9.39.1",
+    "eslint-config-ali": "^16.5.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "less": "^4.4.0",
-    "nodemon": "^3.1.10",
-    "png-to-ico": "^2.1.8",
-    "prettier": "^3.6.2",
-    "sharp": "^0.34.3",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.1",
+    "prettier": "^3.7.4",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6",
     "vite-plugin-eslint": "^1.8.1"
   }
 }
