@@ -1,8 +1,8 @@
 import { app, Menu, Tray } from 'electron';
 import path from 'path';
 
-import { APP_PATH } from '../utils/constant';
-import createWindow, { baseWindow } from '../windows/main';
+import { APP_PATH } from '@/utils/constant';
+import MainWindow from '@/windows/main';
 
 export default () => {
   /* SystemTray: start */
@@ -14,11 +14,7 @@ export default () => {
     {
       label: '打开应用',
       click: () => {
-        if (baseWindow != null && !baseWindow.isDestroyed()) {
-          baseWindow.focus();
-        } else {
-          createWindow();
-        }
+        MainWindow.show();
       },
     },
     {
@@ -38,11 +34,7 @@ export default () => {
 
   /* DoubleClick: start */
   systemTray.on('double-click', () => {
-    if (baseWindow != null && !baseWindow.isDestroyed()) {
-      baseWindow.focus();
-    } else {
-      createWindow();
-    }
+    MainWindow.show();
   });
   /* DoubleClick: end */
 };

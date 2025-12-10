@@ -16,18 +16,15 @@ const Index = () => {
   console.log(location, 'as');
 
   useEffect(() => {
-    window.ipcRenderer.invoke('routerSetPath', location.pathname);
+    window.ipcRenderer.invoke('setRouter', location.pathname);
   }, [location.pathname]);
 
-  useIpcRenderer.on(
-    'routerSetPath',
-    (e, data) => {
-      if (location.pathname !== data) {
-        navigate(data);
-      }
-    },
-    [location.pathname],
-  );
+  // prettier-ignore
+  useIpcRenderer.on('setRouter', (_, data) => {
+    if (location.pathname !== data) {
+      navigate(data);
+    }
+  }, [location.pathname]);
 
   return (
     <Routes>

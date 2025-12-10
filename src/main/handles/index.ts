@@ -1,4 +1,4 @@
-import logger from '../utils/logger';
+import logger from '@/utils/logger';
 
 // Files to exclude from auto-registration
 const EXCLUDED_FILES = ['constructor', 'index'];

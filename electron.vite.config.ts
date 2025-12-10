@@ -6,7 +6,14 @@ import eslint from 'vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  main: {},
+  main: {
+    resolve: {
+      alias: {
+        '@': resolve('src/main'),
+        'package.json': path.resolve(__dirname, 'package.json'),
+      },
+    },
+  },
   preload: {},
   renderer: {
     resolve: {

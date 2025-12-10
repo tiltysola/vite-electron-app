@@ -2,10 +2,7 @@ import { app, BaseWindow } from 'electron';
 
 import { registerAllHandles } from './handles';
 import tray from './services/tray';
-import { baseWindow } from './windows/main';
-import createWindow from './windows/main';
-
-console.log(123);
+import MainWindow from './windows/main';
 
 /* SingleInstance: ensure only one application at the same time. */
 const singleInstance = app.requestSingleInstanceLock();
@@ -32,7 +29,7 @@ if (!singleInstance && process.env.ENV !== 'development') {
 app.whenReady().then(() => {
   /* OpenAsHidden: judge if the application started at system startup */
   if (process.argv.indexOf('--openAsHidden') < 0) {
-    createWindow();
+    MainWindow.show();
   }
   /* OpenAsHidden: end */
 
@@ -40,18 +37,14 @@ app.whenReady().then(() => {
   app.on('activate', () => {
     // If app is active but no window found, reinit window.
     if (BaseWindow.getAllWindows().length === 0) {
-      createWindow();
+      MainWindow.show();
     }
   });
   /* AppActivated: end */
 
   /* SecondInstance: when second instance started, quit and focus the first instance. */
   app.on('second-instance', () => {
-    if (baseWindow != null && !baseWindow.isDestroyed()) {
-      baseWindow.focus();
-    } else {
-      createWindow();
-    }
+    MainWindow.show();
   });
   /* SecondInstance: end */
 

@@ -42,7 +42,7 @@ export type IpcRenderer = Readonly<typeof _ipcRenderer>;
 
 const _electronAlert = {
   open: (props: AlertProps) => {
-    return ipcRenderer.invoke('alertOpen', props);
+    return ipcRenderer.invoke('openAlert', props);
   },
 } as const;
 

@@ -35,21 +35,17 @@ const App = () => {
   };
 
   useEffect(() => {
-    window.ipcRenderer.invoke('routerGetPath').then((res) => {
+    window.ipcRenderer.invoke('getRouter').then((res) => {
       setPath(res);
     });
-    window.ipcRenderer.invoke('utilGetOs').then((res) => {
+    window.ipcRenderer.invoke('getOs').then((res) => {
       setOs(res);
     });
   }, []);
 
-  useIpcRenderer.on(
-    'routerSetPath',
-    (e, data) => {
-      setPath(data);
-    },
-    [],
-  );
+  useIpcRenderer.on('setRouter', (_, data) => {
+    setPath(data);
+  });
 
   return (
     <Flex

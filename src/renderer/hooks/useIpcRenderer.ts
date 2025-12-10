@@ -17,7 +17,7 @@ export default {
     }, [callback]);
 
     useEffect(() => {
-      const removeListener = ipcRenderer.on(channelRef.current, callbackRef.current);
+      const removeListener = window.ipcRenderer.on(channelRef.current, callbackRef.current);
       return () => {
         removeListener();
       };
@@ -33,7 +33,7 @@ export default {
     }, [callback]);
 
     useEffect(() => {
-      const removeListener = ipcRenderer.once(channelRef.current, callbackRef.current);
+      const removeListener = window.ipcRenderer.once(channelRef.current, callbackRef.current);
       return () => {
         removeListener();
       };

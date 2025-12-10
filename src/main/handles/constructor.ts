@@ -1,6 +1,6 @@
 import { ipcMain as _ipcMain } from 'electron';
 
-import logger from '../utils/logger';
+import logger from '@/utils/logger';
 
 // IpcMain: Package ipcMain to log the channel and listener.
 export default {

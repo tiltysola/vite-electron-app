@@ -18,19 +18,19 @@ const App = () => {
   const { disableMinimize, disableMaximize } = JSON.parse(searchParams.get('props') || '{}');
 
   const handleMinimize = () => {
-    window.ipcRenderer.invoke('controlMinimize');
+    window.ipcRenderer.invoke('minimize');
   };
 
   const handleResize = () => {
-    window.ipcRenderer.invoke('controlResize');
+    window.ipcRenderer.invoke('resize');
   };
 
   const handleClose = () => {
-    window.ipcRenderer.invoke('controlClose');
+    window.ipcRenderer.invoke('close');
   };
 
   useEffect(() => {
-    window.ipcRenderer.invoke('controlResizeStatus').then((res) => {
+    window.ipcRenderer.invoke('resizeStatus').then((res) => {
       setResizeStatus(res);
     });
   }, []);

@@ -1,6 +1,6 @@
 import { screen } from 'electron';
 
-import { sideBar, titleBar, view } from '../windows/main';
+import MainWindow from '@/windows/main';
 import ipcMain from './constructor';
 
 export default () => {
@@ -10,22 +10,22 @@ export default () => {
     }, 1000);
   });
 
-  ipcMain.handle('funInvoke', (e, data) => {
+  ipcMain.handle('funInvoke', (_, data) => {
     const { content } = data;
     return `接收到了一条长度为${content.length}的消息`;
   });
 
-  ipcMain.handle('funOpenDevTools', (e, data) => {
+  ipcMain.handle('funOpenDevTools', (_, data) => {
     if (data === 'title') {
-      titleBar.webContents.openDevTools({
+      MainWindow.getTitleBar()?.webContents.openDevTools({
         mode: 'detach',
       });
     } else if (data === 'side') {
-      sideBar.webContents.openDevTools({
+      MainWindow.getSideBar()?.webContents.openDevTools({
         mode: 'detach',
       });
     } else if (data === 'view') {
-      view.webContents.openDevTools({
+      MainWindow.getView()?.webContents.openDevTools({
         mode: 'detach',
       });
     }

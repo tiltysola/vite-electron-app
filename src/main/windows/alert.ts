@@ -1,9 +1,8 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import os from 'os';
-import path from 'path';
 
-import { ENTRY_PATH } from '../utils/constant';
-import { loadContent } from '../utils/loader';
+import { loadContent } from '@/utils/loader';
+import { PRELOAD_PATH } from '@/utils/constant';
 
 export interface AlertProps {
   type?: 'confirm' | 'input';
@@ -19,27 +18,43 @@ interface AlertWindowProps extends AlertProps {
   parent: BrowserWindow;
 }
 
+class AlertWindowInstance {
+  private alertId: string;
+  private props: AlertWindowProps;
 
-export const createWindow = (props: AlertWindowProps): Promise<boolean> => {
-  let browserWindow: BrowserWindow;
+  private browserWindow!: BrowserWindow;
+  private resolvePromise!: (value: boolean | string) => void;
+  private handleAlertEvents: (event: Electron.IpcMainEvent, data: any) => void;
 
-  const {
-    type = 'confirm',
-    title,
-    content,
-    okText = false,
-    cancelText = false,
-    width = 360,
-    height = 152,
-    parent,
-  } = props;
+  constructor(props: AlertWindowProps) {
+    this.alertId = Math.random().toString(36).substring(2, 11);
+    this.props = props;
 
-  const platform = os.platform();
+    this.handleAlertEvents = this.onAlertEvents.bind(this);
+  }
 
-  return new Promise((resolve) => {
-    const alertId = Math.random().toString(36).substring(2, 11);
+  public open(): Promise<boolean | string> {
+    return new Promise((resolve) => {
+      this.resolvePromise = resolve;
+      this.createWindow();
+    });
+  }
 
-    browserWindow = new BrowserWindow({
+  private createWindow() {
+    const {
+      type = 'confirm',
+      title,
+      content,
+      okText = false,
+      cancelText = false,
+      width = 360,
+      height = 152,
+      parent,
+    } = this.props;
+
+    const platform = os.platform();
+
+    this.browserWindow = new BrowserWindow({
       width,
       height,
       frame: false,
@@ -53,12 +68,12 @@ export const createWindow = (props: AlertWindowProps): Promise<boolean> => {
       parent,
       webPreferences: {
         nodeIntegration: false,
-        preload: path.join(__dirname, '../preload/index.js'),
+        preload: PRELOAD_PATH,
       },
     });
 
-    loadContent(browserWindow.webContents, 'alert', {
-      alertId,
+    loadContent(this.browserWindow.webContents, 'alert', {
+      alertId: this.alertId,
       type,
       title,
       content,
@@ -66,52 +81,60 @@ export const createWindow = (props: AlertWindowProps): Promise<boolean> => {
       cancelText,
     });
 
-    const handleAlertEvents = (e: any, data: any) => {
-      const { alertId: _alertId, event, ...restProps } = data;
-      if (_alertId === alertId) {
-        if (event === 'show') {
-          browserWindow.show();
-          if (restProps.width || restProps.height) {
-            browserWindow.setSize(
-              restProps.width || browserWindow.getBounds().width,
-              restProps.height || browserWindow.getBounds().height,
-            );
-            browserWindow.center();
-          }
-        } else if (event === 'confirm') {
-          browserWindow.close();
-          resolve(restProps.data || true);
-        } else if (event === 'close') {
-          browserWindow.close();
-          resolve(false);
+    ipcMain.on('alertEvents', this.handleAlertEvents);
+
+    this.browserWindow.on('blur', () => {
+      if (platform === 'win32') {
+        this.browserWindow.setBackgroundMaterial('acrylic');
+      }
+    });
+
+    this.browserWindow.on('focus', () => {
+      if (platform === 'win32') {
+        this.browserWindow.setBackgroundMaterial('acrylic');
+      }
+    });
+
+    this.browserWindow.on('close', () => {
+      if (this.props.parent != null && !this.props.parent.isDestroyed()) {
+        this.props.parent.focus();
+      }
+    });
+
+    this.browserWindow.on('closed', () => {
+      ipcMain.removeListener('alertEvents', this.handleAlertEvents);
+      this.resolvePromise(false);
+    });
+  }
+
+  private onAlertEvents(_: Electron.IpcMainEvent, data: any) {
+    const { alertId, event, ...restProps } = data;
+    if (alertId === this.alertId) {
+      if (event === 'show') {
+        this.browserWindow.show();
+        if (restProps.width || restProps.height) {
+          this.browserWindow.setSize(
+            restProps.width || this.browserWindow.getBounds().width,
+            restProps.height || this.browserWindow.getBounds().height,
+          );
+          this.browserWindow.center();
         }
+      } else if (event === 'confirm') {
+        this.browserWindow.close();
+        this.resolvePromise(restProps.data || true);
+      } else if (event === 'close') {
+        this.browserWindow.close();
+        this.resolvePromise(false);
       }
     }
-    ipcMain.on('alertEvents', handleAlertEvents);
-  
-    browserWindow.on('blur', () => {
-      if (platform === 'win32') {
-        browserWindow.setBackgroundMaterial('acrylic');
-      }
-    });
+  }
+}
 
-    browserWindow.on('focus', () => {
-      if (platform === 'win32') {
-        browserWindow.setBackgroundMaterial('acrylic');
-      }
-    });
+export class AlertWindow {
+  static open(props: AlertWindowProps): Promise<boolean | string> {
+    const instance = new AlertWindowInstance(props);
+    return instance.open();
+  }
+}
 
-    browserWindow.on('close', () => {
-      if (parent != null && !parent.isDestroyed()) {
-        parent.focus();
-      }
-    });
-
-    browserWindow.on('closed', () => {
-      ipcMain.removeListener('alertEvents', handleAlertEvents);
-      resolve(false);
-    });
-  });
-};
-
-export default createWindow;
+export default AlertWindow;

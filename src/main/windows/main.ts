@@ -1,90 +1,145 @@
 import { BaseWindow, screen, WebContentsView } from 'electron';
-import path from 'path';
 
-import { loadContent } from '../utils/loader';
-
-export let baseWindow: BaseWindow;
-export let view: WebContentsView;
-export let titleBar: WebContentsView;
-export let sideBar: WebContentsView;
+import { loadContent } from '@/utils/loader';
+import { PRELOAD_PATH } from '@/utils/constant';
 
 const WIDTH = 1200;
 const HEIGHT = 800;
 
-export const createWindow = () => {
-  const primaryDisplay = screen.getPrimaryDisplay();
-  const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+class MainWindowInstance {
+  public baseWindow?: BaseWindow;
+  public view?: WebContentsView;
+  public titleBar?: WebContentsView;
+  public sideBar?: WebContentsView;
 
-  baseWindow = new BaseWindow({
-    width: WIDTH,
-    height: HEIGHT,
-    frame: false,
-    vibrancy: 'fullscreen-ui',
-    backgroundMaterial: 'acrylic',
-    minWidth: WIDTH,
-    minHeight: HEIGHT,
-    maxWidth: screenWidth,
-    maxHeight: screenHeight,
-    show: true,
-  });
+  public show() {
+    this.createWindow();
+  }
 
-  view = new WebContentsView({
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, '../preload/index.js'),
-    },
-  });
-  loadContent(view.webContents, 'index');
-  baseWindow.contentView.addChildView(view);
-  view.setBackgroundColor('#00000000');
+  public sendMsg(event: string, data: any) {
+    if (this.baseWindow && !this.baseWindow.isDestroyed()) {
+      this.view!.webContents.send(event, data);
+      this.titleBar!.webContents.send(event, data);
+      this.sideBar!.webContents.send(event, data);
+    }
+  }
 
-  titleBar = new WebContentsView({
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, '../preload/index.js'),
-    },
-  });
-  loadContent(titleBar.webContents, 'title');
-  baseWindow.contentView.addChildView(titleBar);
-  titleBar.setBackgroundColor('#00000000');
+  private createWindow() {
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const screenWidth = primaryDisplay.workAreaSize.width;
+    const screenHeight = primaryDisplay.workAreaSize.height;
 
-  sideBar = new WebContentsView({
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, '../preload/index.js'),
-    },
-  });
-  loadContent(sideBar.webContents, 'side');
-  baseWindow.contentView.addChildView(sideBar);
-  sideBar.setBackgroundColor('#00000000');
+    if (!this.baseWindow || this.baseWindow.isDestroyed()) {
+      this.baseWindow = new BaseWindow({
+        width: WIDTH,
+        height: HEIGHT,
+        frame: false,
+        vibrancy: 'fullscreen-ui',
+        backgroundMaterial: 'acrylic',
+        minWidth: WIDTH,
+        minHeight: HEIGHT,
+        maxWidth: screenWidth,
+        maxHeight: screenHeight,
+        show: true,
+      });
 
-  Promise.all([
-    new Promise((resolve) => view.webContents.on('did-finish-load', () => resolve(true))),
-    new Promise((resolve) => titleBar.webContents.on('did-finish-load', () => resolve(true))),
-    new Promise((resolve) => sideBar.webContents.on('did-finish-load', () => resolve(true))),
-  ]).then(() => baseWindow.show());
+      this.view = new WebContentsView({
+        webPreferences: {
+          nodeIntegration: false,
+          preload: PRELOAD_PATH,
+        },
+      });
+      loadContent(this.view.webContents, 'index');
+      this.baseWindow.contentView.addChildView(this.view);
+      this.view.setBackgroundColor('#00000000');
 
-  const resize = () => {
-    const bounds = baseWindow.getBounds();
-    // 确保宽度不超过屏幕宽度
-    const safeWidth = Math.min(bounds.width, screenWidth);
-    const safeHeight = Math.min(bounds.height, screenHeight);
+      this.titleBar = new WebContentsView({
+        webPreferences: {
+          nodeIntegration: false,
+          preload: PRELOAD_PATH,
+        },
+      });
+      loadContent(this.titleBar.webContents, 'title');
+      this.baseWindow.contentView.addChildView(this.titleBar);
+      this.titleBar.setBackgroundColor('#00000000');
+    
+      this.sideBar = new WebContentsView({
+        webPreferences: {
+          nodeIntegration: false,
+          preload: PRELOAD_PATH,
+        },
+      });
+      loadContent(this.sideBar.webContents, 'side');
+      this.baseWindow.contentView.addChildView(this.sideBar);
+      this.sideBar.setBackgroundColor('#00000000');
+    
+      Promise.all([
+        new Promise((resolve) => this.view!.webContents.on('did-finish-load', () => resolve(true))),
+        new Promise((resolve) => this.titleBar!.webContents.on('did-finish-load', () => resolve(true))),
+        new Promise((resolve) => this.sideBar!.webContents.on('did-finish-load', () => resolve(true))),
+      ]).then(() => this.baseWindow!.show());
+      
+      const resize = () => {
+        const bounds = this.baseWindow!.getBounds();
+        // 确保宽度不超过屏幕宽度
+        const safeWidth = Math.min(bounds.width, screenWidth);
+        const safeHeight = Math.min(bounds.height, screenHeight);
+    
+        this.view!.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: safeHeight });
+        this.titleBar!.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: 32 });
+        this.sideBar!.setBounds({ x: 0, y: 0, width: 64, height: safeHeight });
+      };
+      resize();
+    
+      this.baseWindow.on('blur', () => {
+        this.baseWindow!.setBackgroundMaterial('acrylic');
+      });
+    
+      this.baseWindow.on('focus', () => {
+        this.baseWindow!.setBackgroundMaterial('acrylic');
+      });
+    
+      this.baseWindow.on('resize', resize);
+    } else {
+      this.baseWindow.show();
+      this.baseWindow.focus();
+    }
+  }
+}
 
-    view.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: safeHeight });
-    titleBar.setBounds({ x: 64, y: 0, width: safeWidth - 64, height: 32 });
-    sideBar.setBounds({ x: 0, y: 0, width: 64, height: safeHeight });
-  };
-  resize();
+export class MainWindow {
+  private static instance: MainWindowInstance;
 
-  baseWindow.on('blur', () => {
-    baseWindow.setBackgroundMaterial('acrylic');
-  });
+  private static getInstance() {
+    if (!MainWindow.instance) {
+      MainWindow.instance = new MainWindowInstance();
+    }
+    return MainWindow.instance;
+  }
 
-  baseWindow.on('focus', () => {
-    baseWindow.setBackgroundMaterial('acrylic');
-  });
+  static show() {
+    MainWindow.getInstance().show();
+  }
 
-  baseWindow.on('resize', resize);
-};
+  static sendMsg(event: string, data: any) {
+    MainWindow.getInstance().sendMsg(event, data);
+  }
 
-export default createWindow;
+  static getBaseWindow() {
+    return MainWindow.getInstance().baseWindow;
+  }
+
+  static getView() {
+    return MainWindow.getInstance().view;
+  }
+
+  static getTitleBar() {
+    return MainWindow.getInstance().titleBar;
+  }
+
+  static getSideBar() {
+    return MainWindow.getInstance().sideBar;
+  }
+}
+
+export default MainWindow;
