@@ -22,7 +22,7 @@ const Index = () => {
     window.electronAlert
       .open({
         title: '提示',
-        content: '这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。这是一个弹窗提示。',
+        content: '这是一个弹窗提示。',
         okText: '确认',
         cancelText: '取消',
       })

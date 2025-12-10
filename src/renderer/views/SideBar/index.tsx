@@ -63,7 +63,7 @@ const Index = () => {
               [styles.active]: path === item.path,
             })}
             onClick={() => {
-              window.ipcRenderer.invoke('routerSetPath', item.path);
+              window.ipcRenderer.invoke('setRouter', item.path);
             }}
           >
             {item.icon}

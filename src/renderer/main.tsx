@@ -9,6 +9,8 @@ import TitleBar from '@/views/TitleBar';
 import Boundary from '@/components/Boundary';
 import Provider from '@/components/Provider';
 
+import './global.less';
+
 const searchParams = new URLSearchParams(window.location.search);
 const targetView = searchParams.get('targetView') || 'index';
 

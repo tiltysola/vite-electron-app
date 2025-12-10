@@ -127,9 +127,7 @@ const Index = () => {
               key={index}
               content={message.content}
               placement={message.role === 'user' ? 'start' : 'end'}
-              avatar={{
-                icon: message.role === 'user' ? <UserOutlined /> : <RobotOutlined />,
-              }}
+              avatar={message.role === 'user' ? <UserOutlined /> : <RobotOutlined />}
             />
           ))}
         </Flex>

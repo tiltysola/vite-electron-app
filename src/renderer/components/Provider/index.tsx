@@ -3,10 +3,6 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 
-import { theme } from './theme';
-
-import './global.less';
-
 interface ThemeProps {
   children: React.ReactNode;
 }
@@ -16,7 +12,7 @@ const Index = (props: ThemeProps) => {
 
   return (
     <React.StrictMode>
-      <ConfigProvider locale={zhCN} theme={theme}>
+      <ConfigProvider locale={zhCN}>
         {children}
       </ConfigProvider>
     </React.StrictMode>

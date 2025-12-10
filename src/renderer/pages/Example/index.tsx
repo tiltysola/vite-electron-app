@@ -80,7 +80,7 @@ const Index = () => {
               key={i}
               placement={v.role === 'user' ? 'end' : 'start'}
               content={v.content}
-              avatar={{ icon: <UserOutlined /> }}
+              avatar={<UserOutlined />}
             />
           ))}
         </Flex>
