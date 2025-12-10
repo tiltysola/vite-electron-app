@@ -14,7 +14,7 @@ const Index = () => {
             text: 'Error Code: 404',
           },
           {
-            text: `Location: ${location.pathname}`,
+            text: `Location: ${location.href}`,
           },
           {
             text: `Time: ${new Date().toString()}`,

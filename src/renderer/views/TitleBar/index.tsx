@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import { Flex } from 'antd';
 
@@ -7,11 +6,10 @@ import Close from '@/components/Icon/Close';
 import Maximize from '@/components/Icon/Maximize';
 import Minimize from '@/components/Icon/Minimize';
 import Minus from '@/components/Icon/Minus';
-import Provider from '@/components/Provider';
 
 import styles from './style.module.less';
 
-const App = () => {
+const Index = () => {
   const [resizeStatus, setResizeStatus] = useState(false);
 
   const searchParams = new URLSearchParams(window.location.search);
@@ -56,9 +54,4 @@ const App = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root')!);
-root.render(
-  <Provider>
-    <App />
-  </Provider>,
-);
+export default Index;

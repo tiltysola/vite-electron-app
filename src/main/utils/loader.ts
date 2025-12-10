@@ -1,19 +1,25 @@
 import { WebContents } from 'electron';
 import path from 'path';
 
-const ELECTRON_RENDERER_URL = process.env.ELECTRON_RENDERER_URL || 'http://localhost:5173';
+const isDev = process.env.ENV !== 'production';
+const RENDERER_URL = process.env.ELECTRON_RENDERER_URL || 'http://localhost:5173';
 
 export const loadContent = (
   webContents: WebContents,
-  type: string,
-  props?: Record<string, any>,
-) => {
-  const queryString = props && new URLSearchParams({ props: JSON.stringify(props) }).toString();
-  switch (process.env.ENV) {
-    case 'production':
-      webContents.loadFile(path.join(__dirname, `../render/${type}.html?${queryString || ''}`));
-      break;
-    default:
-      webContents.loadURL(`${ELECTRON_RENDERER_URL}/${type}.html?${queryString || ''}`);
+  targetView?: string,
+  props?: Record<string, unknown>,
+): void => {
+  const query = {
+    targetView: targetView || 'index',
+    props: JSON.stringify(props || {}),
+  }
+  if (isDev) {
+    const url = new URL(`index.html`, RENDERER_URL);
+    if (query) {
+      Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, value));
+    }
+    webContents.loadURL(url.toString());
+  } else {
+    webContents.loadFile(path.join(__dirname, `../renderer/index.html`), { query });
   }
 };

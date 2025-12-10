@@ -40,7 +40,7 @@ class MainWindowInstance {
         minHeight: HEIGHT,
         maxWidth: screenWidth,
         maxHeight: screenHeight,
-        show: true,
+        show: false,
       });
 
       this.view = new WebContentsView({
@@ -49,7 +49,7 @@ class MainWindowInstance {
           preload: PRELOAD_PATH,
         },
       });
-      loadContent(this.view.webContents, 'index');
+      loadContent(this.view.webContents);
       this.baseWindow.contentView.addChildView(this.view);
       this.view.setBackgroundColor('#00000000');
 

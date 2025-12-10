@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import { Flex } from 'antd';
 import classNames from 'classnames';
@@ -9,7 +8,6 @@ import { HomeOutlined } from '@ant-design/icons';
 
 import Copilot from '@/components/Icon/Copilot';
 import Terminal from '@/components/Icon/Terminal';
-import Provider from '@/components/Provider';
 
 import styles from './style.module.less';
 
@@ -26,7 +24,7 @@ const menuList = [
   },
 ];
 
-const App = () => {
+const Index = () => {
   const [path, setPath] = useState('/');
   const [os, setOs] = useState('win32');
 
@@ -81,9 +79,4 @@ const App = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root')!);
-root.render(
-  <Provider>
-    <App />
-  </Provider>,
-);
+export default Index;

@@ -24,7 +24,7 @@ const Index = (props: BoundaryProps) => {
                 text: 'Error Code: 500',
               },
               {
-                text: `Location: ${location.pathname}`,
+                text: `Location: ${location.href}`,
               },
               {
                 text: `Time: ${new Date().toString()}`,

@@ -60,6 +60,7 @@ class AlertWindowInstance {
       frame: false,
       vibrancy: 'fullscreen-ui',
       backgroundMaterial: 'acrylic',
+      opacity: 0,
       show: false,
       resizable: false,
       maximizable: false,
@@ -118,6 +119,7 @@ class AlertWindowInstance {
             restProps.height || this.browserWindow.getBounds().height,
           );
           this.browserWindow.center();
+          this.browserWindow.setOpacity(1);
         }
       } else if (event === 'confirm') {
         this.browserWindow.close();

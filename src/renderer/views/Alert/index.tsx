@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import { Button, Flex, Input } from 'antd';
 import classNames from 'classnames';
-
-import Provider from '@/components/Provider';
 
 import styles from './style.module.less';
 
@@ -13,7 +10,7 @@ const { alertId, type, title, content, okText, cancelText } = JSON.parse(
   searchParams.get('props') || '{}',
 );
 
-const App = () => {
+const Index = () => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -91,9 +88,4 @@ const App = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root')!);
-root.render(
-  <Provider>
-    <App />
-  </Provider>,
-);
+export default Index;
