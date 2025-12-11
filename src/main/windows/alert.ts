@@ -108,6 +108,26 @@ class AlertWindowInstance {
     });
   }
 
+  private fadeIn(duration: number = 150) {
+    const startOpacity = this.browserWindow.getOpacity();
+    const targetOpacity = 1;
+    const steps = 15;
+    const stepDuration = duration / steps;
+    const opacityStep = (targetOpacity - startOpacity) / steps;
+    let currentStep = 0;
+
+    const animate = () => {
+      if (currentStep < steps && !this.browserWindow.isDestroyed()) {
+        currentStep++;
+        const newOpacity = Math.min(startOpacity + opacityStep * currentStep, 1);
+        this.browserWindow.setOpacity(newOpacity);
+        setTimeout(animate, stepDuration);
+      }
+    };
+
+    animate();
+  }
+
   private onAlertEvents(_: Electron.IpcMainEvent, data: any) {
     const { alertId, event, ...restProps } = data;
     if (alertId === this.alertId) {
@@ -119,7 +139,7 @@ class AlertWindowInstance {
             restProps.height || this.browserWindow.getBounds().height,
           );
           this.browserWindow.center();
-          this.browserWindow.setOpacity(1);
+          this.fadeIn();
         }
       } else if (event === 'confirm') {
         this.browserWindow.close();
