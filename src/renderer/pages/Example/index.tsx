@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Flex } from 'antd';
-
 import { useIpcRenderer } from '@/hooks';
 import { UserOutlined } from '@ant-design/icons';
 import { Bubble, Welcome } from '@ant-design/x';
+import { Button, Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -67,30 +66,28 @@ const Index = () => {
   );
 
   return (
-    <div className={styles.example}>
-      <Flex vertical gap={16}>
-        <Welcome
-          icon={<img src="logo.png" />}
-          title="欢迎来到IPC通讯环节"
-          description="您可以通过ipcRenderer.send和ipcRenderer.invoke来发送和接收消息"
-        />
-        <Flex vertical gap={16}>
-          {messageQueue.map((v, i) => (
-            <Bubble
-              key={i}
-              placement={v.role === 'user' ? 'end' : 'start'}
-              content={v.content}
-              avatar={<UserOutlined />}
-            />
-          ))}
-        </Flex>
-        <Flex justify="end">
-          <Button type="default" onClick={handleBack}>
-            返回首页
-          </Button>
-        </Flex>
+    <Flex className={styles.example} direction="column" gap="16px">
+      <Welcome
+        icon={<img src="/assets/logo.png" />}
+        title="欢迎来到IPC通讯环节"
+        description="您可以通过ipcRenderer.send和ipcRenderer.invoke来发送和接收消息"
+      />
+      <Flex direction="column" gap="16px">
+        {messageQueue.map((v, i) => (
+          <Bubble
+            key={i}
+            placement={v.role === 'user' ? 'end' : 'start'}
+            content={v.content}
+            avatar={<UserOutlined />}
+          />
+        ))}
       </Flex>
-    </div>
+      <Flex justify="end">
+        <Button onClick={handleBack}>
+          返回首页
+        </Button>
+      </Flex>
+    </Flex>
   );
 };
 

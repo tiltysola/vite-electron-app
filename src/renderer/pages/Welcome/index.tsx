@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Flex, Splitter, Tag } from 'antd';
+import { Button, Code,Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -41,22 +41,6 @@ const Index = () => {
       });
   };
 
-  const FreeComp = () => {
-    return (
-      <div className={styles.freeComp}>
-        <div className={styles.logo}>
-          <img src="/assets/logo.png" />
-        </div>
-        <div className={styles.title}>
-          <span>Vite Electron App</span>
-        </div>
-        <div className={styles.content}>
-          <span>Powered by Vite & Electron</span>
-        </div>
-      </div>
-    );
-  };
-
   useEffect(() => {
     const requestAnimation = () => {
       window.ipcRenderer.invoke('funCursorPosition').then((res) => {
@@ -71,36 +55,37 @@ const Index = () => {
   }, []);
 
   return (
-    <div className={styles.welcome}>
-      <Splitter className={styles.splitter}>
-        <Splitter.Panel min={8}>
-          <Flex className={styles.splitterLeft} justify="center" align="center">
-            <FreeComp />
-          </Flex>
-        </Splitter.Panel>
-        <Splitter.Panel min={8}>
-          <Flex className={styles.splitterRight} justify="center" align="center">
-            <FreeComp />
-          </Flex>
-        </Splitter.Panel>
-      </Splitter>
-      <Flex className={styles.actions} justify="center" align="center" gap={16}>
-        <Button type="default" onClick={handleIpcExample}>
+    <Flex className={styles.welcome} direction="column" align="center" justify="center" gap="16px">
+      <Flex justify="center" align="center">
+        <div className={styles.freeComp}>
+          <div className={styles.logo}>
+            <img src="/assets/logo.png" />
+          </div>
+          <div className={styles.title}>
+            <span>Vite Electron App</span>
+          </div>
+          <div className={styles.content}>
+            <span>Powered by Vite & Electron</span>
+          </div>
+        </div>
+      </Flex>
+      <Flex justify="center" align="center" gap="16px">
+        <Button onClick={handleIpcExample}>
           IPC通讯示例
         </Button>
-        <Button type="default" onClick={handleCopilot}>
+        <Button  onClick={handleCopilot}>
           大模型对话
         </Button>
-        <Button type="default" onClick={handleOpenAlert}>
+        <Button onClick={handleOpenAlert}>
           打开弹窗提示
         </Button>
       </Flex>
       <div className={styles.cursor}>
-        <Tag color="black" bordered={false}>
+        <Code color="gray">
           [{cursorPosition.x}, {cursorPosition.y}]
-        </Tag>
+        </Code>
       </div>
-    </div>
+    </Flex>
   );
 };
 

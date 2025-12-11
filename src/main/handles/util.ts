@@ -1,14 +1,11 @@
 import { app, BrowserWindow } from 'electron';
 import { platform } from 'os';
+
 import AlertWindow from '@/windows/alert';
 
 import ipcMain from './constructor';
 
-import MainWindow from '@/windows/main';
-
 export default () => {
-  let path = '/';
-
   ipcMain.handle('getOs', () => {
     return platform();
   });
@@ -43,15 +40,6 @@ export default () => {
   ipcMain.handle('shutdown', () => {
     app.quit();
     app.exit();
-  });
-
-  ipcMain.handle('getRouter', () => {
-    return path;
-  });
-
-  ipcMain.handle('setRouter', (_, data) => {
-    MainWindow.sendMsg('setRouter', data);
-    path = data;
   });
 
   ipcMain.handle('openAlert', (e, data) => {

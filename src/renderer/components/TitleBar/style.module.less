@@ -1,10 +1,14 @@
 .title-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 32px;
+  flex-shrink: 0;
   -webkit-app-region: drag;
   &-actions {
     position: relative;
-    height: calc(100% - 2px);
+    height: 100%;
     padding: 0 16px 2px 40px;
     overflow: hidden;
     -webkit-app-region: no-drag;
@@ -20,7 +24,9 @@
       backdrop-filter: blur(10px);
       transform: skew(20deg);
       transform-origin: left center;
-      z-index: -1;
+    }
+    * {
+      position: relative;
     }
   }
   &-button {

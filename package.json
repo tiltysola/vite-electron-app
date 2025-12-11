@@ -29,8 +29,9 @@
     "fix": "eslint --fix ."
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
     "@ant-design/x": "^2.1.0",
-    "antd": "^6.1.0",
+    "@radix-ui/themes": "^3.2.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.19",
     "electron-updater": "^6.3.9",

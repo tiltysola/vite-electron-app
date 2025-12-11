@@ -1,14 +1,11 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
 
-import Router from '@/router';
 import Alert from '@/views/Alert';
-import SideBar from '@/views/SideBar';
-import TitleBar from '@/views/TitleBar';
+import Main from '@/views/Main';
+import { Theme } from '@radix-ui/themes';
 
-import Boundary from '@/components/Boundary';
-import Provider from '@/components/Provider';
-
+import "@radix-ui/themes/styles.css";
 import './global.less';
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -16,26 +13,18 @@ const targetView = searchParams.get('targetView') || 'index';
 
 const getTargetWindow = () => {
   switch (targetView) {
-    case 'title':
-      return <TitleBar />;
-    case 'side':
-      return <SideBar />;
     case 'alert':
       return <Alert />;
     default:
-      return (
-        <HashRouter>
-          <Router />
-        </HashRouter>
-      );
+      return <Main />;
   }
 };
 
 const root = createRoot(document.getElementById('root')!);
 root.render(
-  <Provider>
-    <Boundary>
+  <React.StrictMode>
+    <Theme>
       {getTargetWindow()}
-    </Boundary>
-  </Provider>,
+    </Theme>
+  </React.StrictMode>
 );

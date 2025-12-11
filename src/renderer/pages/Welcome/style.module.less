@@ -1,78 +1,33 @@
 .welcome {
+  width: 100%;
   height: 100%;
-  .splitter {
-    position: relative;
-    overflow: hidden;
-    :global(.ant-splitter-panel) {
-      position: relative;
-      overflow: hidden;
-    }
-    &-left,
-    &-right {
-      position: absolute;
-      top: 0;
-      width: 100vw;
-      height: 100%;
-    }
-    &-left {
-      left: 0;
-      background-color: #f8f8f8;
-      background-image:
-        radial-gradient(circle at 1px 1px, #e8e8e8 1px, transparent 2px),
-        radial-gradient(circle at 1px 1px, #e8e8e8 1px, transparent 2px);
-      background-size: 16px 16px;
-      background-position:
-        0 0,
-        8px 8px;
-      color: #2c2c2c;
-    }
-    &-right {
-      right: 0;
-      background-color: #1c1c1c;
-      background-image:
-        radial-gradient(circle at 1px 1px, #2c2c2c 1px, transparent 2px),
-        radial-gradient(circle at 1px 1px, #2c2c2c 1px, transparent 2px);
-      background-size: 16px 16px;
-      background-position:
-        0 0,
-        8px 8px;
-      color: #e8e8e8;
-    }
-  }
   .freeComp {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     pointer-events: none;
-  }
-  .logo {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 16px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
-  }
-  .title {
-    font-size: 24px;
-    font-weight: 600;
-    user-select: none;
-  }
-  .content {
-    margin-bottom: 32px;
-    font-size: 16px;
-    font-weight: 400;
-    user-select: none;
-  }
-  .actions {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, calc(50% + 96px));
-    z-index: 100;
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      user-select: none;
+    }
+    .content {
+      margin-bottom: 32px;
+      font-size: 16px;
+      font-weight: 400;
+      user-select: none;
+    }
   }
   .cursor {
     position: absolute;

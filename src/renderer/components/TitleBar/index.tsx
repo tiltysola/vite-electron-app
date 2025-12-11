@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Flex } from 'antd';
+import { Flex } from '@radix-ui/themes';
 
 import Close from '@/components/Icon/Close';
 import Maximize from '@/components/Icon/Maximize';
@@ -34,8 +34,8 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex className={styles.titleBar} justify="end" align="center" gap={16}>
-      <Flex className={styles.titleBarActions} justify="center" align="center" gap={16}>
+    <Flex className={styles.titleBar} justify="end" align="center" gap="16px">
+      <Flex className={styles.titleBarActions} justify="center" align="center" gap="16px">
         {!disableMinimize && (
           <span className={styles.titleBarButton} onClick={handleMinimize}>
             <Minus size={16} />

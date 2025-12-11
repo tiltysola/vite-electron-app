@@ -1,6 +1,7 @@
 import { screen } from 'electron';
 
 import MainWindow from '@/windows/main';
+
 import ipcMain from './constructor';
 
 export default () => {
@@ -15,20 +16,10 @@ export default () => {
     return `接收到了一条长度为${content.length}的消息`;
   });
 
-  ipcMain.handle('funOpenDevTools', (_, data) => {
-    if (data === 'title') {
-      MainWindow.getTitleBar()?.webContents.openDevTools({
-        mode: 'detach',
-      });
-    } else if (data === 'side') {
-      MainWindow.getSideBar()?.webContents.openDevTools({
-        mode: 'detach',
-      });
-    } else if (data === 'view') {
-      MainWindow.getView()?.webContents.openDevTools({
-        mode: 'detach',
-      });
-    }
+  ipcMain.handle('funOpenDevTools', () => {
+    MainWindow.getBrowserWindow()?.webContents.openDevTools({
+      mode: 'detach',
+    });
   });
 
   ipcMain.handle('funCursorPosition', () => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -5,9 +6,8 @@ import pngToIco from 'png-to-ico';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 
-// Get current file directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Get current file directory (ESM compatibility)
+fileURLToPath(import.meta.url);
 
 // Ensure directories exist
 const dirs = [
@@ -33,6 +33,7 @@ const pngFiles = [];
 async function generatePNGs() {
   for (const size of sizes) {
     const outputPath = path.join('build', 'icons', 'png', `${size}x${size}.png`);
+    // eslint-disable-next-line no-await-in-loop
     await sharp(sourceLogo)
       .resize(size, size)
       .toFile(outputPath);
@@ -45,7 +46,7 @@ async function generateICO() {
   try {
     // Only use smaller icon sizes to avoid file size issues
     const smallPngFiles = pngFiles.filter(file => {
-      const size = parseInt(path.basename(file, '.png').split('x')[0]);
+      const size = parseInt(path.basename(file, '.png').split('x')[0], 10);
       return size <= 256; // Only use icons up to 256x256
     });
 
@@ -79,6 +80,7 @@ async function generateICNS() {
 
   // Generate different size icons
   for (const [filename, size] of Object.entries(iconSizes)) {
+    // eslint-disable-next-line no-await-in-loop
     await sharp(sourceLogo)
       .resize(size, size)
       .toFile(path.join(iconsetDir, filename));

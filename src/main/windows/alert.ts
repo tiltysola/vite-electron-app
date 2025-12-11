@@ -1,8 +1,8 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import os from 'os';
 
-import { loadContent } from '@/utils/loader';
 import { PRELOAD_PATH } from '@/utils/constant';
+import { loadContent } from '@/utils/loader';
 
 export interface AlertProps {
   type?: 'confirm' | 'input';
@@ -33,7 +33,7 @@ class AlertWindowInstance {
     this.handleAlertEvents = this.onAlertEvents.bind(this);
   }
 
-  public open(): Promise<boolean | string> {
+  open(): Promise<boolean | string> {
     return new Promise((resolve) => {
       this.resolvePromise = resolve;
       this.createWindow();

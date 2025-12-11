@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Flex } from 'antd';
 import classNames from 'classnames';
 
-import { useIpcRenderer } from '@/hooks';
 import { HomeOutlined } from '@ant-design/icons';
+import { Flex } from '@radix-ui/themes';
 
 import Copilot from '@/components/Icon/Copilot';
 import Terminal from '@/components/Icon/Terminal';
@@ -25,45 +25,40 @@ const menuList = [
 ];
 
 const Index = () => {
-  const [path, setPath] = useState('/');
   const [os, setOs] = useState('win32');
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleTerminal = () => {
     window.ipcRenderer.invoke('funOpenDevTools', 'view');
   };
 
   useEffect(() => {
-    window.ipcRenderer.invoke('getRouter').then((res) => {
-      setPath(res);
-    });
     window.ipcRenderer.invoke('getOs').then((res) => {
       setOs(res);
     });
   }, []);
 
-  useIpcRenderer.on('setRouter', (_, data) => {
-    setPath(data);
-  });
-
   return (
     <Flex
       className={classNames(styles.sideBar, styles[os])}
-      vertical
-      justify="space-between"
+      direction="column"
+      justify="between"
       align="center"
     >
       <div className={styles.sideBarLogo}>
         <img src="/assets/logo.png" alt="logo" />
       </div>
-      <Flex className={styles.sideBarMenu} vertical justify="center" align="center" gap={8}>
+      <Flex className={styles.sideBarMenu} direction="column" justify="center" align="center" gap="8px">
         {menuList.map((item) => (
           <span
             key={item.path}
             className={classNames(styles.sideBarButton, {
-              [styles.active]: path === item.path,
+              [styles.active]: location.pathname === item.path,
             })}
             onClick={() => {
-              window.ipcRenderer.invoke('setRouter', item.path);
+              navigate(item.path);
             }}
           >
             {item.icon}

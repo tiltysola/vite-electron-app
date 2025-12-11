@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { Button, Flex, Input } from 'antd';
 import classNames from 'classnames';
+
+import { Button, Flex, TextField } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -43,12 +44,12 @@ const Index = () => {
   return (
     <Flex
       className={classNames(styles.alert)}
-      vertical
-      justify="space-between"
+      direction="column"
+      justify="between"
       align="center"
-      gap={12}
+      gap="12px"
     >
-      <Flex className={styles.alertContent} gap={12}>
+      <Flex className={styles.alertContent} gap="12px">
         <div className={styles.alertContentIcon}>
           <img src="/assets/logo.png" alt="icon" />
         </div>
@@ -65,7 +66,7 @@ const Index = () => {
           )}
           {type === 'input' && (
             <div className={styles.alertContentInput}>
-              <Input
+              <TextField.Root
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="请输入..."
@@ -74,13 +75,13 @@ const Index = () => {
           )}
         </div>
       </Flex>
-      <Flex className={styles.alertButtons} justify="end" align="center" gap={12}>
+      <Flex className={styles.alertButtons} justify="end" align="center" gap="12px">
         {(okText || type === 'input') && (
-          <Button type="primary" onClick={handleOk}>
+          <Button onClick={handleOk}>
             {okText || '确定'}
           </Button>
         )}
-        <Button type="default" onClick={handleCancel}>
+        <Button variant="soft" onClick={handleCancel}>
           {cancelText || '关闭'}
         </Button>
       </Flex>

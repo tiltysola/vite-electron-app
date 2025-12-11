@@ -1,4 +1,4 @@
-// Expose custom ipcRenderer and electronAlert APIs in the preload
+/* eslint-disable no-console */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 import { AlertProps } from '../main/windows/alert';
@@ -56,8 +56,8 @@ if (process.contextIsolated) {
     console.error(error);
   }
 } else {
-  // @ts-ignore
+  // @ts-ignore ts-2339
   window.ipcRenderer = _ipcRenderer;
-  // @ts-ignore
+  // @ts-ignore ts-2339
   window.electronAlert = _electronAlert;
 }

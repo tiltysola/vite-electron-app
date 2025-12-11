@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Button, Flex } from 'antd';
-
 import { PlusOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
 import { Bubble, Conversations, Sender, Welcome } from '@ant-design/x';
+import { Button, Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -90,19 +89,19 @@ const Index = () => {
 
   return (
     <Flex className={styles.copilot}>
-      <Flex className={styles.copilotSidebar} vertical gap={16}>
+      <Flex className={styles.copilotSidebar} direction="column" gap="16px">
         <Flex
           className={styles.copilotSidebarHeader}
-          vertical
+          direction="column"
           justify="center"
           align="center"
-          gap={16}
+          gap="16px"
         >
           <img src="./assets/logo.png" />
           <span>大模型对话</span>
         </Flex>
         <Flex className={styles.copilotSidebarActions} justify="center" align="center">
-          <Button type="default" onClick={handleAddConversation}>
+          <Button onClick={handleAddConversation}>
             <PlusOutlined />
             新增对话
           </Button>
@@ -117,8 +116,8 @@ const Index = () => {
           onActiveChange={handleChangeConversation}
         />
       </Flex>
-      <Flex className={styles.copilotContent} vertical gap={16}>
-        <Flex className={styles.copilotContentBubble} vertical gap={16}>
+      <Flex className={styles.copilotContent} direction="column" gap="16px">
+        <Flex className={styles.copilotContentBubble} direction="column" gap="16px">
           {messages.length === 0 && (
             <Welcome title={currentConversation?.title} description={currentConversation?.id} />
           )}

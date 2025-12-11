@@ -12,6 +12,8 @@ export const registerAllHandles = async () => {
   const modules = import.meta.glob('./*.ts', { eager: false });
 
   for (const modulePath in modules) {
+    if (!Object.prototype.hasOwnProperty.call(modules, modulePath)) continue;
+
     // Extract filename without extension
     const fileName = modulePath.replace(/^\.\/(.*)\.ts$/, '$1');
 
@@ -21,6 +23,7 @@ export const registerAllHandles = async () => {
     }
 
     try {
+      // eslint-disable-next-line no-await-in-loop
       const module = (await modules[modulePath]()) as { default?: () => void };
       const registerFn = module.default;
 
