@@ -55,7 +55,7 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex className={styles.welcome} direction="column" align="center" justify="center" gap="16px">
+    <Flex className={styles.welcome} direction="column" align="center" justify="center" gap="4">
       <Flex justify="center" align="center">
         <div className={styles.freeComp}>
           <div className={styles.logo}>
@@ -69,7 +69,7 @@ const Index = () => {
           </div>
         </div>
       </Flex>
-      <Flex justify="center" align="center" gap="16px">
+      <Flex justify="center" align="center" gap="4">
         <Button onClick={handleIpcExample}>
           IPC通讯示例
         </Button>

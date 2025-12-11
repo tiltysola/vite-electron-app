@@ -1,24 +1,24 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Copilot from '@/pages/Copilot';
-import Example from '@/pages/Example';
-import Initialize from '@/pages/Initialize';
-import Notfound from '@/pages/NotFound';
-import Welcome from '@/pages/Welcome';
-import Layout from '@/components/Layouts';
+import { RouteConfig,routes } from './config';
 
-const Index = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Initialize />} />
-        <Route path="welcome" element={<Welcome />} />
-        <Route path="copilot" element={<Copilot />} />
-        <Route path="example" element={<Example />} />
-        <Route path="*" element={<Notfound />} />
+const renderRoutes = (routeList: RouteConfig[]): React.ReactNode =>
+  routeList.map((route) =>
+    route.index ? (
+      <Route key={route.path} index element={route.element} />
+    ) : (
+      <Route key={route.path} path={route.path} element={route.element}>
+        {route.children && renderRoutes(route.children)}
       </Route>
-    </Routes>
+    )
   );
-};
+
+const Index = () => (
+  <Routes>
+    <Route path={routes.path} element={routes.element}>
+      {routes.children && renderRoutes(routes.children)}
+    </Route>
+  </Routes>
+);
 
 export default Index;

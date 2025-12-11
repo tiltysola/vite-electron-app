@@ -4,9 +4,9 @@ import Router from '@/router';
 
 const Index = () => {
   return (
-      <HashRouter>
-        <Router />
-      </HashRouter>
+    <HashRouter>
+      <Router />
+    </HashRouter>
   );
 }
 

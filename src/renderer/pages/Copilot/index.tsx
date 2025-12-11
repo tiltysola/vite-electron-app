@@ -89,13 +89,13 @@ const Index = () => {
 
   return (
     <Flex className={styles.copilot}>
-      <Flex className={styles.sidebar} direction="column" gap="16px">
+      <Flex className={styles.sidebar} direction="column" gap="4">
         <Flex
           className={styles.sidebarHeader}
           direction="column"
           justify="center"
           align="center"
-          gap="16px"
+          gap="4"
         >
           <img src="./logo.png" />
           <span>大模型对话</span>
@@ -116,8 +116,8 @@ const Index = () => {
           onActiveChange={handleChangeConversation}
         />
       </Flex>
-      <Flex className={styles.content} direction="column" gap="16px">
-        <Flex className={styles.contentBubble} direction="column" gap="16px">
+      <Flex className={styles.content} direction="column" gap="4">
+        <Flex className={styles.contentBubble} direction="column" gap="4">
           {messages.length === 0 && (
             <Welcome title={currentConversation?.title} description={currentConversation?.id} />
           )}

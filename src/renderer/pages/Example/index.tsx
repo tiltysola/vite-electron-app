@@ -66,13 +66,13 @@ const Index = () => {
   );
 
   return (
-    <Flex className={styles.example} direction="column" gap="16px">
+    <Flex className={styles.example} direction="column" gap="4">
       <Welcome
         icon={<img src="./logo.png" />}
         title="欢迎来到IPC通讯环节"
         description="您可以通过ipcRenderer.send和ipcRenderer.invoke来发送和接收消息"
       />
-      <Flex direction="column" gap="16px">
+      <Flex direction="column" gap="4">
         {messageQueue.map((v, i) => (
           <Bubble
             key={i}

@@ -23,7 +23,7 @@ const getTargetWindow = () => {
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <Theme>
+    <Theme accentColor='gray'>
       {getTargetWindow()}
     </Theme>
   </React.StrictMode>

@@ -6,9 +6,14 @@
   -webkit-app-region: drag;
   .bar-left {
     height: 100%;
-  }
-  .menu-button {
+    font-size: 14px;
     -webkit-app-region: no-drag;
+    :global {
+      .rt-Button.rt-variant-ghost {
+        margin: 0;
+        padding: 2px 4px;
+      }
+    }
   }
   .bar-right {
     height: 100%;
