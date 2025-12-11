@@ -16,6 +16,7 @@ export default defineConfig({
   },
   preload: {},
   renderer: {
+    publicDir: resolve('src/renderer/assets'),
     resolve: {
       alias: {
         '@': resolve('src/renderer'),

@@ -1,8 +1,7 @@
-import { WebContents } from 'electron';
+import { app, WebContents } from 'electron';
 import path from 'path';
 
-const isDev = process.env.ENV !== 'production';
-const RENDERER_URL = process.env.ELECTRON_RENDERER_URL || 'http://localhost:5173';
+const {ELECTRON_RENDERER_URL} = process.env;
 
 export const loadContent = (
   webContents: WebContents,
@@ -13,8 +12,8 @@ export const loadContent = (
     targetView: targetView || 'index',
     props: JSON.stringify(props || {}),
   }
-  if (isDev) {
-    const url = new URL(`index.html`, RENDERER_URL);
+  if (!app.isPackaged && ELECTRON_RENDERER_URL) {
+    const url = new URL(`index.html`, ELECTRON_RENDERER_URL);
     if (query) {
       Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, value));
     }

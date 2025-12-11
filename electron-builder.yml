@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-app
+appId: app.electron.vite
+productName: vite-electron-app
 directories:
   buildResources: build
 files:
@@ -7,18 +7,21 @@ files:
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{.env,.env.*,.editorconfig,.gitignore,.npmrc,package-lock.json}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-app
+  icon: build/icons/win/icon.ico
+  executableName: vite-electron-app
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  include: build/installer.nsh
 mac:
+  icon: build/icons/mac/icon.icns
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -29,6 +32,7 @@ mac:
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
+  icon: build/icons/png/512x512.png
   target:
     - AppImage
     - snap

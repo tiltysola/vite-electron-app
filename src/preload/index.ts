@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-import { AlertProps } from '../main/windows/alert';
-
 const _ipcRenderer = {
   send: (channel: string, ...args: any[]) => {
     console.log('[IpcMain]', `Channel: \`${channel}\`,`, 'Direction: Renderer => Main.');

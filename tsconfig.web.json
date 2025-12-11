@@ -3,7 +3,8 @@
   "include": [
     "src/renderer/**/*",
     "src/renderer/**/*.tsx",
-    "src/preload/*.d.ts"
+    "src/preload/*.d.ts",
+    "typings/**/*.d.ts"
   ],
   "compilerOptions": {
     "composite": true,

@@ -9,10 +9,8 @@ import util from 'util';
 
 import { stopHandler } from './cleanup';
 
-const isDev = process.env.ENV === 'development';
-
 // Log directory
-const logPath = path.join(app.getPath('userData'), isDev ? 'logs-dev' : 'logs');
+const logPath = path.join(app.getPath('userData'), app.isPackaged ? 'logs' : 'logs-dev');
 
 // Log streams
 let logStreamInfo: fs.WriteStream;
@@ -92,7 +90,7 @@ const initLogStreams = () => {
     return fs.createWriteStream(path.join(logDir, fileName), { flags: 'a' });
   };
 
-  const suffix = isDev ? 'dev' : 'prod';
+  const suffix = app.isPackaged ? 'prod' : 'dev';
 
   // Close old log streams
   const oldStreams = [logStreamInfo, logStreamDebug, logStreamWarn, logStreamError];

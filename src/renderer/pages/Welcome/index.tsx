@@ -59,7 +59,7 @@ const Index = () => {
       <Flex justify="center" align="center">
         <div className={styles.freeComp}>
           <div className={styles.logo}>
-            <img src="/assets/logo.png" />
+            <img src="./logo.png" />
           </div>
           <div className={styles.title}>
             <span>Vite Electron App</span>

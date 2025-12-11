@@ -17,7 +17,7 @@ const Index = ({ data }: ErrorDataProp) => {
   return (
     <div className={styles.error}>
       <div className={styles.eHeader}>
-        <img className={styles.eLogo} src="/assets/logo.png" />
+        <img className={styles.eLogo} src="./logo.png" />
         <span className={styles.eInfo}>{data.title}</span>
       </div>
       <div className={styles.eMain}>

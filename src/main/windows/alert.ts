@@ -4,7 +4,7 @@ import os from 'os';
 import { PRELOAD_PATH } from '@/utils/constant';
 import { loadContent } from '@/utils/loader';
 
-export interface AlertProps {
+interface AlertProps {
   type?: 'confirm' | 'input';
   title?: string;
   content: string;

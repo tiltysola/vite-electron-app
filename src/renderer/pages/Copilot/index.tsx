@@ -97,7 +97,7 @@ const Index = () => {
           align="center"
           gap="16px"
         >
-          <img src="./assets/logo.png" />
+          <img src="./logo.png" />
           <span>大模型对话</span>
         </Flex>
         <Flex className={styles.copilotSidebarActions} justify="center" align="center">

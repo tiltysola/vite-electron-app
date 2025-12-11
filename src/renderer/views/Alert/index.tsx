@@ -51,7 +51,7 @@ const Index = () => {
     >
       <Flex className={styles.alertContent} gap="12px">
         <div className={styles.alertContentIcon}>
-          <img src="/assets/logo.png" alt="icon" />
+          <img src="./logo.png" alt="icon" />
         </div>
         <div className={styles.alertContentContainer} ref={contentRef}>
           {title && (

@@ -1,14 +1,12 @@
-import { app, Menu, Tray } from 'electron';
-import path from 'path';
+import { app, Menu, nativeImage, Tray } from 'electron';
 
-import { APP_PATH } from '@/utils/constant';
 import MainWindow from '@/windows/main';
+
+import trayIcon from '../../../build/icons/png/16x16.png?asset';
 
 export default () => {
   /* SystemTray: start */
-  const trayPath = path.join(APP_PATH, 'build/icons/png/16x16.png');
-
-  const systemTray = new Tray(trayPath);
+  const systemTray = new Tray(nativeImage.createFromPath(trayIcon));
 
   const contextMenu = Menu.buildFromTemplate([
     {

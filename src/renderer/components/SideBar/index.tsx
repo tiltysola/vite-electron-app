@@ -48,7 +48,7 @@ const Index = () => {
       align="center"
     >
       <div className={styles.sideBarLogo}>
-        <img src="/assets/logo.png" alt="logo" />
+        <img src="./logo.png" alt="logo" />
       </div>
       <Flex className={styles.sideBarMenu} direction="column" justify="center" align="center" gap="8px">
         {menuList.map((item) => (

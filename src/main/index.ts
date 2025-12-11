@@ -9,7 +9,7 @@ import './utils/errorHandler';
 /* SingleInstance: ensure only one application at the same time. */
 const singleInstance = app.requestSingleInstanceLock();
 
-if (!singleInstance && process.env.ENV !== 'development') {
+if (!singleInstance && !app.isPackaged) {
   app.quit();
 }
 /* SingleInstance: end */
