@@ -108,7 +108,7 @@ class AlertWindowInstance {
     });
   }
 
-  private fadeIn(duration: number = 150) {
+  private fadeIn(duration = 150) {
     const startOpacity = this.browserWindow.getOpacity();
     const targetOpacity = 1;
     const steps = 15;

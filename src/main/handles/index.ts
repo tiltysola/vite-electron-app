@@ -1,4 +1,4 @@
-import logger from '@/utils/logger';
+import Logger from '@/utils/Logger';
 
 // Files to exclude from auto-registration
 const EXCLUDED_FILES = ['constructor', 'index'];
@@ -29,10 +29,10 @@ export const registerAllHandles = async () => {
 
       if (typeof registerFn === 'function') {
         registerFn();
-        logger.info('[Handles]', `Loaded handle module: ${fileName}`);
+        Logger.info('[Handles]', `Loaded handle module: ${fileName}`);
       }
     } catch (error) {
-      logger.error('[Handles]', `Failed to load handle module: ${fileName}`, error);
+      Logger.error('[Handles]', `Failed to load handle module: ${fileName}`, error);
     }
   }
 };

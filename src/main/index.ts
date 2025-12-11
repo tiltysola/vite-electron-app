@@ -4,6 +4,8 @@ import { registerAllHandles } from './handles';
 import tray from './services/tray';
 import MainWindow from './windows/main';
 
+import './utils/errorHandler';
+
 /* SingleInstance: ensure only one application at the same time. */
 const singleInstance = app.requestSingleInstanceLock();
 
