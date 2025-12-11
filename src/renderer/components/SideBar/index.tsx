@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import classNames from 'classnames';
@@ -25,8 +24,6 @@ const menuList = [
 ];
 
 const Index = () => {
-  const [os, setOs] = useState('win32');
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,27 +31,21 @@ const Index = () => {
     window.ipcRenderer.invoke('funOpenDevTools', 'view');
   };
 
-  useEffect(() => {
-    window.ipcRenderer.invoke('getOs').then((res) => {
-      setOs(res);
-    });
-  }, []);
-
   return (
     <Flex
-      className={classNames(styles.sideBar, styles[os])}
+      className={styles.sideBar}
       direction="column"
       justify="between"
       align="center"
     >
-      <div className={styles.sideBarLogo}>
+      <div className={styles.logo}>
         <img src="./logo.png" alt="logo" />
       </div>
-      <Flex className={styles.sideBarMenu} direction="column" justify="center" align="center" gap="8px">
+      <Flex className={styles.barMenu} direction="column" justify="center" align="center" gap="8px">
         {menuList.map((item) => (
           <span
             key={item.path}
-            className={classNames(styles.sideBarButton, {
+            className={classNames(styles.menuButton, {
               [styles.active]: location.pathname === item.path,
             })}
             onClick={() => {
@@ -65,8 +56,8 @@ const Index = () => {
           </span>
         ))}
       </Flex>
-      <div className={styles.sideBarActions}>
-        <span className={styles.sideBarButton} onClick={handleTerminal}>
+      <div className={styles.barActions}>
+        <span className={styles.menuButton} onClick={handleTerminal}>
           <Terminal size={20} />
         </span>
       </div>

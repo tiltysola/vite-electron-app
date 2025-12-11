@@ -1,8 +1,19 @@
 .wrapper {
   width: 100%;
   height: 100%;
+  &.win32 {
+    background-color: #ffffff88;
+  }
+  &.darwin {
+    background-color: #ffffff28;
+  }
   .wrapper-content {
     position: relative;
+    margin: 8px;
+    margin-left: 0;
+    border-radius: 8px;
     background-color: #ffffff;
+    box-shadow: 0 0 4px #00000018;
+    overflow: hidden;
   }
 }

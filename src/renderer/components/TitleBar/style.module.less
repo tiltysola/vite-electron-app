@@ -1,35 +1,20 @@
 .title-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 32px;
+  padding: 8px 16px;
   flex-shrink: 0;
+  border-bottom: 1px solid #00000018;
   -webkit-app-region: drag;
-  &-actions {
-    position: relative;
+  .bar-left {
     height: 100%;
-    padding: 0 16px 2px 40px;
-    overflow: hidden;
-    -webkit-app-region: no-drag;
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 20px;
-      width: 100%;
-      height: 100%;
-      border-radius: 0 0 0 8px;
-      background: #00000088;
-      backdrop-filter: blur(10px);
-      transform: skew(20deg);
-      transform-origin: left center;
-    }
-    * {
-      position: relative;
-    }
   }
-  &-button {
+  .menu-button {
+    -webkit-app-region: no-drag;
+  }
+  .bar-right {
+    height: 100%;
+    -webkit-app-region: no-drag;
+  }
+  .control-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,6 +22,7 @@
     font-size: 16px;
     color: #ffffff;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: invert(1);
     cursor: pointer;
     &:active {
       scale: 0.9;

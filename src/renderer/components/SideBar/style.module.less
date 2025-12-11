@@ -4,13 +4,7 @@
   padding: 16px 0;
   flex-shrink: 0;
   -webkit-app-region: drag;
-  &.win32 {
-    background-color: #ffffff88;
-  }
-  &.darwin {
-    background-color: #ffffff28;
-  }
-  &-logo {
+  .logo {
     width: 40px;
     height: 40px;
     filter: grayscale(100%) brightness(0);
@@ -20,13 +14,13 @@
       object-fit: contain;
     }
   }
-  &-menu {
+  .bar-menu {
     -webkit-app-region: no-drag;
   }
-  &-actions {
+  .bar-actions {
     -webkit-app-region: no-drag;
   }
-  &-button {
+  .menu-button {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -89,9 +89,9 @@ const Index = () => {
 
   return (
     <Flex className={styles.copilot}>
-      <Flex className={styles.copilotSidebar} direction="column" gap="16px">
+      <Flex className={styles.sidebar} direction="column" gap="16px">
         <Flex
-          className={styles.copilotSidebarHeader}
+          className={styles.sidebarHeader}
           direction="column"
           justify="center"
           align="center"
@@ -100,14 +100,14 @@ const Index = () => {
           <img src="./logo.png" />
           <span>大模型对话</span>
         </Flex>
-        <Flex className={styles.copilotSidebarActions} justify="center" align="center">
+        <Flex className={styles.sidebarActions} justify="center" align="center">
           <Button onClick={handleAddConversation}>
             <PlusOutlined />
             新增对话
           </Button>
         </Flex>
         <Conversations
-          className={styles.copilotSidebarConversations}
+          className={styles.sidebarConversations}
           activeKey={currentConversationId}
           items={conversations.map((conversation) => ({
             key: conversation.id,
@@ -116,8 +116,8 @@ const Index = () => {
           onActiveChange={handleChangeConversation}
         />
       </Flex>
-      <Flex className={styles.copilotContent} direction="column" gap="16px">
-        <Flex className={styles.copilotContentBubble} direction="column" gap="16px">
+      <Flex className={styles.content} direction="column" gap="16px">
+        <Flex className={styles.contentBubble} direction="column" gap="16px">
           {messages.length === 0 && (
             <Welcome title={currentConversation?.title} description={currentConversation?.id} />
           )}
@@ -130,7 +130,7 @@ const Index = () => {
             />
           ))}
         </Flex>
-        <Flex className={styles.copilotContentInput} justify="center" align="center">
+        <Flex className={styles.contentInput} justify="center" align="center">
           <Sender
             value={inputValue}
             onChange={(v) => {
