@@ -35,22 +35,19 @@
       &:not(:first-child) {
         margin-top: 8px;
       }
-      :global {
-        .ant-input {
-          background-color: #00000008;
-        }
+      input {
+        height: 32px;
+        font-size: 13px;
       }
     }
   }
   &-buttons {
     width: 100%;
     flex: 0;
-    :global {
-      .rt-Button {
-        width: 100%;
-        height: 28px;
-        flex: 1;
-      }
+    button {
+      width: 100%;
+      height: 28px;
+      flex: 1;
     }
   }
 }

@@ -30,5 +30,14 @@ export default defineConfig(
       ],
     },
   },
+  {
+    files: ['src/renderer/shadcn/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-nested-ternary': 0,
+      'no-param-reassign': 0,
+      '@typescript-eslint/consistent-type-assertions': 0,
+      '@typescript-eslint/no-shadow': 0,
+    },
+  },
   eslintConfigPrettier,
 );

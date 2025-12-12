@@ -1,8 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { PlusOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
-import { Bubble, Conversations, Sender, Welcome } from '@ant-design/x';
-import { Button, Flex } from '@radix-ui/themes';
+import { Plus } from 'lucide-react';
+
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { useSidebar } from '@/shadcn/components/animate-ui/components/radix/sidebar';
+import { Conversations } from '@ant-design/x';
+import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -12,20 +16,19 @@ interface Conversation {
   createdAt: Date;
 }
 
-interface Message {
-  content: string;
-  role: 'user' | 'assistant';
+export interface OutletContext {
+  currentConversationId?: string;
+  conversations: Conversation[];
+  setCurrentConversationId: (id: string) => void;
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
 }
 
 const Index = () => {
+  const { open, setOpen } = useSidebar();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string>();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState('');
 
-  const currentConversation = useMemo(() => {
-    return conversations.find((conversation) => conversation.id === currentConversationId);
-  }, [conversations, currentConversationId]);
+  const previousOpenStatus = useRef<boolean>(open);
 
   const handleChangeConversation = (data: string) => {
     setCurrentConversationId(data);
@@ -43,34 +46,6 @@ const Index = () => {
     setCurrentConversationId(`conversation-${conversations.length + 1}`);
   };
 
-  const handleSubmit = () => {
-    setMessages((_messages) => [
-      ..._messages,
-      {
-        content: inputValue,
-        role: 'user',
-      },
-    ]);
-    window.ipcRenderer
-      .invoke('funInvoke', {
-        content: inputValue,
-      })
-      .then((data) => {
-        setMessages((_messages) => [
-          ..._messages,
-          {
-            content: data,
-            role: 'assistant',
-          },
-        ]);
-      });
-    setInputValue('');
-  };
-
-  useEffect(() => {
-    setMessages([]);
-  }, [currentConversation]);
-
   useEffect(() => {
     setConversations([
       {
@@ -87,6 +62,13 @@ const Index = () => {
     setCurrentConversationId('conversation-1');
   }, []);
 
+  useEffect(() => {
+    setOpen(false);
+    return () => {
+      previousOpenStatus.current && setOpen(previousOpenStatus.current);
+    };
+  }, []);
+
   return (
     <Flex className={styles.copilot}>
       <Flex className={styles.sidebar} direction="column" gap="4">
@@ -101,8 +83,8 @@ const Index = () => {
           <span>大模型对话</span>
         </Flex>
         <Flex className={styles.sidebarActions} justify="center" align="center">
-          <Button onClick={handleAddConversation}>
-            <PlusOutlined />
+          <Button className={styles.addConversation} onClick={handleAddConversation}>
+            <Plus />
             新增对话
           </Button>
         </Flex>
@@ -116,30 +98,14 @@ const Index = () => {
           onActiveChange={handleChangeConversation}
         />
       </Flex>
-      <Flex className={styles.content} direction="column" gap="4">
-        <Flex className={styles.contentBubble} direction="column" gap="4">
-          {messages.length === 0 && (
-            <Welcome title={currentConversation?.title} description={currentConversation?.id} />
-          )}
-          {messages.map((message, index) => (
-            <Bubble
-              key={index}
-              content={message.content}
-              placement={message.role === 'user' ? 'start' : 'end'}
-              avatar={message.role === 'user' ? <UserOutlined /> : <RobotOutlined />}
-            />
-          ))}
-        </Flex>
-        <Flex className={styles.contentInput} justify="center" align="center">
-          <Sender
-            value={inputValue}
-            onChange={(v) => {
-              setInputValue(v);
-            }}
-            onSubmit={handleSubmit}
-          />
-        </Flex>
-      </Flex>
+      <Outlet
+        context={{
+          currentConversationId,
+          conversations,
+          setCurrentConversationId,
+          setConversations,
+        }}
+      />
     </Flex>
   );
 };

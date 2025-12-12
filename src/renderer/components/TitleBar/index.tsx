@@ -1,9 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { findBreadcrumbList,routes } from '@/router/config';
-import { MenuOutlined } from '@ant-design/icons';
-import { Button, Flex,IconButton, Separator } from '@radix-ui/themes';
+import { findBreadcrumbList, routes } from '@/router/config';
+import { SidebarTrigger } from '@/shadcn/components/animate-ui/components/radix/sidebar';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/shadcn/ui/breadcrumb';
+import { Flex } from '@radix-ui/themes';
 
 import Close from '@/components/Icon/Close';
 import Maximize from '@/components/Icon/Maximize';
@@ -15,10 +23,10 @@ import styles from './style.module.less';
 const Index = () => {
   const [resizeStatus, setResizeStatus] = useState(false);
 
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { disableMinimize, disableMaximize } = location.search as any || {};
+  const { disableMinimize, disableMaximize } = (location.search as any) || {};
 
   const breadcrumbList = useMemo(() => {
     return findBreadcrumbList(routes, location.pathname) || [];
@@ -45,17 +53,41 @@ const Index = () => {
   return (
     <Flex className={styles.titleBar} justify="between" align="center" gap="4">
       <Flex className={styles.barLeft} align="center" gap="4">
-        <IconButton variant="ghost">
-          <MenuOutlined size={16} />
-        </IconButton>
-        <Separator orientation="vertical" />
+        <SidebarTrigger />
         <Flex align="center" gap="2">
-          {breadcrumbList.map((item, index) => (
-            <>
-              <Button key={item.path} variant="ghost" size="1" onClick={() => navigate(item.path)}>{item.title}</Button>
-              {index < breadcrumbList.length - 1 && <Separator orientation="vertical" style={{ transform: 'rotate(10deg)' }} />}
-            </>
-          ))}
+          <Breadcrumb>
+            <BreadcrumbList>
+              {breadcrumbList.map((item, index) => {
+                const pathKey = breadcrumbList
+                  .slice(0, index + 1)
+                  .map((breadcrumb) => {
+                    const pathParts = breadcrumb.path.split('/').filter(Boolean);
+                    return pathParts.length > 0 ? pathParts[pathParts.length - 1] : 'root';
+                  })
+                  .join('-');
+                return (
+                  <Fragment key={pathKey}>
+                    <BreadcrumbItem>
+                      {index < breadcrumbList.length - 1 ? (
+                        <BreadcrumbLink
+                          className={styles.breadcrumbLink}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(item.path);
+                          }}
+                        >
+                          {item.title}
+                        </BreadcrumbLink>
+                      ) : (
+                        <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
+                    {index < breadcrumbList.length - 1 && <BreadcrumbSeparator />}
+                  </Fragment>
+                );
+              })}
+            </BreadcrumbList>
+          </Breadcrumb>
         </Flex>
       </Flex>
       <Flex className={styles.barRight} align="center" gap="4">

@@ -48,13 +48,13 @@ class MainWindowInstance {
       loadContent(this.browserWindow.webContents);
 
       this.browserWindow.on('ready-to-show', () => this.browserWindow!.show());
-      
+
       this.browserWindow.on('blur', () => {
         if (platform === 'win32') {
           this.browserWindow!.setBackgroundMaterial('acrylic');
         }
       });
-    
+
       this.browserWindow.on('focus', () => {
         if (platform === 'win32') {
           this.browserWindow!.setBackgroundMaterial('acrylic');

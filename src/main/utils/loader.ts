@@ -1,7 +1,7 @@
 import { app, WebContents } from 'electron';
 import path from 'path';
 
-const {ELECTRON_RENDERER_URL} = process.env;
+const { ELECTRON_RENDERER_URL } = process.env;
 
 export const loadContent = (
   webContents: WebContents,
@@ -11,7 +11,7 @@ export const loadContent = (
   const query = {
     targetView: targetView || 'index',
     props: JSON.stringify(props || {}),
-  }
+  };
   if (!app.isPackaged && ELECTRON_RENDERER_URL) {
     const url = new URL(`index.html`, ELECTRON_RENDERER_URL);
     if (query) {

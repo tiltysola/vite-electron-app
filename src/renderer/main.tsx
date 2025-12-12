@@ -5,7 +5,8 @@ import Alert from '@/views/Alert';
 import Main from '@/views/Main';
 import { Theme } from '@radix-ui/themes';
 
-import "@radix-ui/themes/styles.css";
+import '@radix-ui/themes/styles.css';
+import '@/shadcn/theme.css';
 import './global.less';
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -23,8 +24,6 @@ const getTargetWindow = () => {
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <Theme accentColor='gray'>
-      {getTargetWindow()}
-    </Theme>
-  </React.StrictMode>
+    <Theme accentColor="gray">{getTargetWindow()}</Theme>
+  </React.StrictMode>,
 );

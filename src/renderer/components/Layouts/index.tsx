@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import classNames from 'classnames';
-
+import {
+  SidebarInset,
+  SidebarProvider,
+} from '@/shadcn/components/animate-ui/components/radix/sidebar';
 import { Flex } from '@radix-ui/themes';
 
 import Boundary from '../Boundary';
@@ -11,23 +12,17 @@ import TitleBar from '../TitleBar';
 import styles from './style.module.less';
 
 const Index = () => {
-  const [os, setOs] = useState('win32');
-
-  useEffect(() => {
-    window.ipcRenderer.invoke('getOs').then((res) => {
-      setOs(res);
-    });
-  }, []);
-
   return (
-    <Flex className={classNames(styles.wrapper, styles[os])}>
-      <SideBar />
-      <Flex className={styles.wrapperContent} direction="column" width="100%">
-        <TitleBar />
-        <Boundary>
-          <Outlet />
-        </Boundary>
-      </Flex>
+    <Flex className={styles.wrapper}>
+      <SidebarProvider>
+        <SideBar />
+        <SidebarInset className={styles.wrapperContent}>
+          <TitleBar />
+          <Boundary>
+            <Outlet />
+          </Boundary>
+        </SidebarInset>
+      </SidebarProvider>
     </Flex>
   );
 };

@@ -1,17 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { RouteConfig,routes } from './config';
+import { RouteConfig, routes } from './config';
 
-const renderRoutes = (routeList: RouteConfig[]): React.ReactNode =>
-  routeList.map((route) =>
-    route.index ? (
-      <Route key={route.path} index element={route.element} />
+const renderRoutes = (routeList: RouteConfig[], parentPath = ''): React.ReactNode =>
+  routeList.map((route) => {
+    const currentPath = route.path === '/' ? '' : route.path;
+    const fullPathKey = parentPath ? `${parentPath}-${currentPath}` : currentPath || '/';
+    const uniqueKey = route.index ? `${fullPathKey}-index` : fullPathKey;
+
+    return route.index ? (
+      <Route key={uniqueKey} index element={route.element} />
     ) : (
-      <Route key={route.path} path={route.path} element={route.element}>
-        {route.children && renderRoutes(route.children)}
+      <Route key={uniqueKey} path={route.path} element={route.element}>
+        {route.children &&
+          renderRoutes(route.children, parentPath ? `${parentPath}-${currentPath}` : currentPath)}
       </Route>
-    )
-  );
+    );
+  });
 
 const Index = () => (
   <Routes>

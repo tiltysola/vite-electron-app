@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import path from 'path';
 import eslint from 'vite-plugin-eslint';
 
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -31,6 +32,7 @@ export default defineConfig({
     },
     plugins: [
       react(),
+      tailwindcss(),
       eslint({
         include: ['./src/**/*.ts', './src/**/*.tsx'],
         fix: true,

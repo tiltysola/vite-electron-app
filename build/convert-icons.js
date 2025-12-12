@@ -10,13 +10,9 @@ import { fileURLToPath } from 'url';
 fileURLToPath(import.meta.url);
 
 // Ensure directories exist
-const dirs = [
-  'build/icons/mac',
-  'build/icons/png',
-  'build/icons/win'
-];
+const dirs = ['build/icons/mac', 'build/icons/png', 'build/icons/win'];
 
-dirs.forEach(dir => {
+dirs.forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -34,9 +30,7 @@ async function generatePNGs() {
   for (const size of sizes) {
     const outputPath = path.join('build', 'icons', 'png', `${size}x${size}.png`);
     // eslint-disable-next-line no-await-in-loop
-    await sharp(sourceLogo)
-      .resize(size, size)
-      .toFile(outputPath);
+    await sharp(sourceLogo).resize(size, size).toFile(outputPath);
     pngFiles.push(outputPath);
   }
 }
@@ -45,14 +39,17 @@ async function generatePNGs() {
 async function generateICO() {
   try {
     // Only use smaller icon sizes to avoid file size issues
-    const smallPngFiles = pngFiles.filter(file => {
+    const smallPngFiles = pngFiles.filter((file) => {
       const size = parseInt(path.basename(file, '.png').split('x')[0], 10);
       return size <= 256; // Only use icons up to 256x256
     });
 
     const icoBuffer = await pngToIco(smallPngFiles);
     fs.writeFileSync(path.join('build', 'icons', 'win', 'icon.ico'), icoBuffer);
-    console.log('ICO files generated successfully, using the following sizes:', smallPngFiles.map(f => path.basename(f)));
+    console.log(
+      'ICO files generated successfully, using the following sizes:',
+      smallPngFiles.map((f) => path.basename(f)),
+    );
   } catch (err) {
     console.error('Error generating ICO file:', err);
   }
@@ -75,20 +72,20 @@ async function generateICNS() {
     'icon_256x256.png': 256,
     'icon_256x256@2x.png': 512,
     'icon_512x512.png': 512,
-    'icon_512x512@2x.png': 1024
+    'icon_512x512@2x.png': 1024,
   };
 
   // Generate different size icons
   for (const [filename, size] of Object.entries(iconSizes)) {
     // eslint-disable-next-line no-await-in-loop
-    await sharp(sourceLogo)
-      .resize(size, size)
-      .toFile(path.join(iconsetDir, filename));
+    await sharp(sourceLogo).resize(size, size).toFile(path.join(iconsetDir, filename));
   }
 
   // Use iconutil to generate ICNS files
   try {
-    execSync(`iconutil -c icns "${iconsetDir}" -o "${path.join('build', 'icons', 'mac', 'icon.icns')}"`);
+    execSync(
+      `iconutil -c icns "${iconsetDir}" -o "${path.join('build', 'icons', 'mac', 'icon.icns')}"`,
+    );
     // Clean up temporary files
     fs.rmSync(iconsetDir, { recursive: true, force: true });
   } catch (err) {

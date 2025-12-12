@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { User } from 'lucide-react';
+
 import { useIpcRenderer } from '@/hooks';
-import { UserOutlined } from '@ant-design/icons';
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
 import { Bubble, Welcome } from '@ant-design/x';
-import { Button, Flex } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -24,7 +26,7 @@ const Index = () => {
 
   useEffect(() => {
     const outgoingData: MessageProps = {
-      content: '这是一条通过 ipcRenderer.send 方式发送的消息，将会在1秒后收到消息回复。',
+      content: 'This is a message sent by ipcRenderer.send, will receive a message reply in 1 second.',
       role: 'user',
     };
     window.ipcRenderer.send('funSayHello', outgoingData);
@@ -32,7 +34,7 @@ const Index = () => {
       return [...messages, outgoingData];
     });
     const outGoingDataInvoke: MessageProps = {
-      content: '这是一条通过 ipcRenderer.invoke 方式发送的消息，将会立刻收到消息回复。',
+      content: 'This is a message sent by ipcRenderer.invoke, will receive a message reply immediately.',
       role: 'user',
     };
     setMessageQueue((messages) => {
@@ -40,7 +42,7 @@ const Index = () => {
     });
     window.ipcRenderer.invoke('funInvoke', outGoingDataInvoke).then((res) => {
       const incomingData: MessageProps = {
-        content: `收到 ipcRenderer.invoke 的返回值: ${res}`,
+        content: `Received the return value of ipcRenderer.invoke: ${res}`,
         role: 'assistant',
       };
       setMessageQueue((messages) => {
@@ -56,7 +58,7 @@ const Index = () => {
         return [
           ...messages,
           {
-            content: `收到 ipcRenderer.send 的返回值: ${data}`,
+            content: `Received the return value of ipcRenderer.send: ${data}`,
             role: 'assistant',
           },
         ];
@@ -69,8 +71,8 @@ const Index = () => {
     <Flex className={styles.example} direction="column" gap="4">
       <Welcome
         icon={<img src="./logo.png" />}
-        title="欢迎来到IPC通讯环节"
-        description="您可以通过ipcRenderer.send和ipcRenderer.invoke来发送和接收消息"
+        title="Welcome to the IPC communication"
+        description="You can send and receive messages by ipcRenderer.send and ipcRenderer.invoke"
       />
       <Flex direction="column" gap="4">
         {messageQueue.map((v, i) => (
@@ -78,14 +80,12 @@ const Index = () => {
             key={i}
             placement={v.role === 'user' ? 'end' : 'start'}
             content={v.content}
-            avatar={<UserOutlined />}
+            avatar={<User />}
           />
         ))}
       </Flex>
       <Flex justify="end">
-        <Button onClick={handleBack}>
-          返回首页
-        </Button>
+        <Button onClick={handleBack}>Back to Home</Button>
       </Flex>
     </Flex>
   );

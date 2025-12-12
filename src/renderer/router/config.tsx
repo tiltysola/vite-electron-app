@@ -1,7 +1,9 @@
-
 import { ReactNode } from 'react';
 
+import { Bot, Home, Sticker } from 'lucide-react';
+
 import Copilot from '@/pages/Copilot';
+import Chat from '@/pages/Copilot/Chat';
 import Example from '@/pages/Example';
 import Initialize from '@/pages/Initialize';
 import Notfound from '@/pages/NotFound';
@@ -12,8 +14,17 @@ export interface RouteConfig {
   path: string;
   title: string;
   element?: ReactNode;
-  children?: RouteConfig[];
+  icon?: ReactNode;
   index?: boolean;
+  hidden?: boolean;
+  children?: RouteConfig[];
+}
+
+export interface NavigationItem {
+  title: string;
+  url: string;
+  icon?: ReactNode;
+  items?: Array<{ title: string; url: string }>;
 }
 
 export const routes: RouteConfig = {
@@ -23,37 +34,49 @@ export const routes: RouteConfig = {
   children: [
     {
       path: '/',
-      title: '初始化',
+      title: 'Initialize',
       element: <Initialize />,
+      hidden: true,
       index: true,
     },
     {
       path: 'welcome',
-      title: '欢迎',
+      title: 'Welcome',
       element: <Welcome />,
+      icon: <Home />,
     },
     {
       path: 'copilot',
-      title: '助手',
+      title: 'Copilot',
       element: <Copilot />,
+      icon: <Bot />,
+      children: [
+        {
+          path: 'chat',
+          title: 'Chat',
+          element: <Chat />,
+        },
+      ],
     },
     {
       path: 'example',
-      title: '示例',
+      title: 'Example',
       element: <Example />,
+      icon: <Sticker />,
     },
     {
       path: '*',
-      title: '错误页面',
+      title: 'Error',
       element: <Notfound />,
+      hidden: true,
     },
-  ]
+  ],
 };
 
 export const findBreadcrumbList = (
   route: RouteConfig,
   pathname: string,
-  parentPath = ''
+  parentPath = '',
 ): Array<{ path: string; title: string }> | null => {
   const fullPath = parentPath + (route.path === '/' ? '' : `/${route.path}`);
   const isMatch = route.index
@@ -74,4 +97,40 @@ export const findBreadcrumbList = (
   }
 
   return null;
+};
+
+export const processRoutes = (
+  routeList: RouteConfig[],
+  parentPath = '',
+  level = 0,
+): NavigationItem[] => {
+  if (level >= 2) return [];
+
+  return routeList
+    .filter((route) => !route.hidden && route.path !== '*')
+    .map((route) => {
+      const fullPath =
+        parentPath + (route.path === '/' ? '' : `/${route.path}`.replace(/\/+/g, '/'));
+
+      const result: NavigationItem = {
+        title: route.title,
+        url: fullPath || '/',
+        icon: route.icon,
+      };
+
+      if (route.children && route.children.length > 0 && level < 1) {
+        result.items = route.children
+          .filter((child) => !child.hidden && child.path !== '*')
+          .map((child) => {
+            const childFullPath =
+              fullPath + (child.path === '/' ? '' : `/${child.path}`.replace(/\/+/g, '/'));
+            return {
+              title: child.title,
+              url: childFullPath || '/',
+            };
+          });
+      }
+
+      return result;
+    });
 };

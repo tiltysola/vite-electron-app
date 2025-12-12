@@ -8,6 +8,6 @@ const Index = () => {
       <Router />
     </HashRouter>
   );
-}
+};
 
 export default Index;

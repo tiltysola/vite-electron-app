@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
-import { Button, Flex, TextField } from '@radix-ui/themes';
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { Input } from '@/shadcn/ui/input';
+import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -66,23 +68,19 @@ const Index = () => {
           )}
           {type === 'input' && (
             <div className={styles.alertContentInput}>
-              <TextField.Root
+              <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="请输入..."
+                placeholder="Enter your input..."
               />
             </div>
           )}
         </div>
       </Flex>
       <Flex className={styles.alertButtons} justify="end" align="center" gap="12px">
-        {(okText || type === 'input') && (
-          <Button onClick={handleOk}>
-            {okText || '确定'}
-          </Button>
-        )}
-        <Button variant="soft" onClick={handleCancel}>
-          {cancelText || '关闭'}
+        {(okText || type === 'input') && <Button size="sm" onClick={handleOk}>{okText || '确定'}</Button>}
+        <Button variant="ghost" size="sm" onClick={handleCancel}>
+          {cancelText || 'Close'}
         </Button>
       </Flex>
     </Flex>
