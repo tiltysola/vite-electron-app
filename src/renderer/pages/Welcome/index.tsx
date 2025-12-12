@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
-import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -50,8 +49,8 @@ const Index = () => {
   };
 
   return (
-    <Flex className={styles.welcome} direction="column" align="center" justify="center" gap="4">
-      <Flex justify="center" align="center">
+    <div className={styles.welcome}>
+      <div className={styles.logoContainer}>
         <div className={styles.freeComp}>
           <div className={styles.logo}>
             <img src="./logo.png" />
@@ -63,14 +62,14 @@ const Index = () => {
             <span>Powered by Vite & Electron</span>
           </div>
         </div>
-      </Flex>
-      <Flex justify="center" align="center" gap="4">
+      </div>
+      <div className={styles.buttonContainer}>
         <Button onClick={handleIpcExample}>IPC Example</Button>
         <Button onClick={handleCopilot}>Copilot</Button>
         <Button onClick={handleOpenAlert}>Open Alert</Button>
         <Button onClick={handleOpenInputAlert}>Open Input Alert</Button>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };
 

@@ -6,7 +6,6 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
 import { useSidebar } from '@/shadcn/components/animate-ui/components/radix/sidebar';
 import { Conversations } from '@ant-design/x';
-import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -70,24 +69,18 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex className={styles.copilot}>
-      <Flex className={styles.sidebar} direction="column" gap="4">
-        <Flex
-          className={styles.sidebarHeader}
-          direction="column"
-          justify="center"
-          align="center"
-          gap="4"
-        >
+    <div className={styles.copilot}>
+      <div className={styles.sidebar}>
+        <div className={styles.sidebarHeader}>
           <img src="./logo.png" />
           <span>大模型对话</span>
-        </Flex>
-        <Flex className={styles.sidebarActions} justify="center" align="center">
+        </div>
+        <div className={styles.sidebarActions}>
           <Button className={styles.addConversation} onClick={handleAddConversation}>
             <Plus />
             新增对话
           </Button>
-        </Flex>
+        </div>
         <Conversations
           className={styles.sidebarConversations}
           activeKey={currentConversationId}
@@ -97,7 +90,7 @@ const Index = () => {
           }))}
           onActiveChange={handleChangeConversation}
         />
-      </Flex>
+      </div>
       <Outlet
         context={{
           currentConversationId,
@@ -106,7 +99,7 @@ const Index = () => {
           setConversations,
         }}
       />
-    </Flex>
+    </div>
   );
 };
 

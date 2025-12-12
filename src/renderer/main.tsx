@@ -3,9 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 import Alert from '@/views/Alert';
 import Main from '@/views/Main';
-import { Theme } from '@radix-ui/themes';
 
-import '@radix-ui/themes/styles.css';
 import '@/shadcn/theme.css';
 import './global.less';
 
@@ -24,6 +22,6 @@ const getTargetWindow = () => {
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <Theme accentColor="gray">{getTargetWindow()}</Theme>
+    {getTargetWindow()}
   </React.StrictMode>,
 );

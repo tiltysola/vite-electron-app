@@ -4,7 +4,6 @@ import { useOutletContext } from 'react-router-dom';
 import { Bot, User } from 'lucide-react';
 
 import { Bubble, Sender, Welcome } from '@ant-design/x';
-import { Flex } from '@radix-ui/themes';
 
 import type { OutletContext } from '..';
 import styles from './style.module.less';
@@ -70,8 +69,8 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex className={styles.content} direction="column" gap="4">
-      <Flex className={styles.contentBubble} direction="column" gap="4">
+    <div className={styles.content}>
+      <div className={styles.contentBubble}>
         {messages.length === 0 && (
           <Welcome title={currentConversation?.title} description={currentConversation?.id} />
         )}
@@ -83,8 +82,8 @@ const Index = () => {
             avatar={message.role === 'user' ? <User /> : <Bot />}
           />
         ))}
-      </Flex>
-      <Flex className={styles.contentInput} justify="center" align="center">
+      </div>
+      <div className={styles.contentInput}>
         <Sender
           value={inputValue}
           onChange={(v) => {
@@ -92,8 +91,8 @@ const Index = () => {
           }}
           onSubmit={handleSubmit}
         />
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };
 

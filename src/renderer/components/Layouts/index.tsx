@@ -4,7 +4,6 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@/shadcn/components/animate-ui/components/radix/sidebar';
-import { Flex } from '@radix-ui/themes';
 
 import Boundary from '../Boundary';
 import SideBar from '../SideBar';
@@ -13,7 +12,7 @@ import styles from './style.module.less';
 
 const Index = () => {
   return (
-    <Flex className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <SidebarProvider>
         <SideBar />
         <SidebarInset className={styles.wrapperContent}>
@@ -23,7 +22,7 @@ const Index = () => {
           </Boundary>
         </SidebarInset>
       </SidebarProvider>
-    </Flex>
+    </div>
   );
 };
 

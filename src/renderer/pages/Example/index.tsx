@@ -6,7 +6,6 @@ import { User } from 'lucide-react';
 import { useIpcRenderer } from '@/hooks';
 import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
 import { Bubble, Welcome } from '@ant-design/x';
-import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -68,13 +67,13 @@ const Index = () => {
   );
 
   return (
-    <Flex className={styles.example} direction="column" gap="4">
+    <div className={styles.example}>
       <Welcome
         icon={<img src="./logo.png" />}
         title="Welcome to the IPC communication"
         description="You can send and receive messages by ipcRenderer.send and ipcRenderer.invoke"
       />
-      <Flex direction="column" gap="4">
+      <div className={styles.messageList}>
         {messageQueue.map((v, i) => (
           <Bubble
             key={i}
@@ -83,11 +82,11 @@ const Index = () => {
             avatar={<User />}
           />
         ))}
-      </Flex>
-      <Flex justify="end">
+      </div>
+      <div className={styles.actions}>
         <Button onClick={handleBack}>Back to Home</Button>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };
 

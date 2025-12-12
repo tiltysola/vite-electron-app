@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
 import { Input } from '@/shadcn/ui/input';
-import { Flex } from '@radix-ui/themes';
 
 import styles from './style.module.less';
 
@@ -44,14 +43,8 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex
-      className={classNames(styles.alert)}
-      direction="column"
-      justify="between"
-      align="center"
-      gap="12px"
-    >
-      <Flex className={styles.alertContent} gap="12px">
+    <div className={classNames(styles.alert)}>
+      <div className={styles.alertContent}>
         <div className={styles.alertContentIcon}>
           <img src="./logo.png" alt="icon" />
         </div>
@@ -76,14 +69,14 @@ const Index = () => {
             </div>
           )}
         </div>
-      </Flex>
-      <Flex className={styles.alertButtons} justify="end" align="center" gap="12px">
+      </div>
+      <div className={styles.alertButtons}>
         {(okText || type === 'input') && <Button size="sm" onClick={handleOk}>{okText || '确定'}</Button>}
         <Button variant="ghost" size="sm" onClick={handleCancel}>
           {cancelText || 'Close'}
         </Button>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };
 

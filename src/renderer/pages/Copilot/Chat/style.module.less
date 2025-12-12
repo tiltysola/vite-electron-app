@@ -1,17 +1,26 @@
 .content {
+  display: flex;
+  flex-direction: column;
   padding: 16px;
   padding-top: 48px;
   width: 100%;
   height: 100%;
   flex: 1;
+  gap: 16px;
   &-bubble {
+    display: flex;
+    flex-direction: column;
     margin-right: -16px;
     padding-right: 16px;
     width: 100%;
     height: 100%;
     overflow: auto;
+    gap: 16px;
   }
   &-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
   }
 }

@@ -11,7 +11,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/shadcn/ui/breadcrumb';
-import { Flex } from '@radix-ui/themes';
 
 import Close from '@/components/Icon/Close';
 import Maximize from '@/components/Icon/Maximize';
@@ -51,10 +50,10 @@ const Index = () => {
   }, []);
 
   return (
-    <Flex className={styles.titleBar} justify="between" align="center" gap="4">
-      <Flex className={styles.barLeft} align="center" gap="4">
+    <div className={styles.titleBar}>
+      <div className={styles.barLeft}>
         <SidebarTrigger />
-        <Flex align="center" gap="2">
+        <div className={styles.breadcrumbContainer}>
           <Breadcrumb>
             <BreadcrumbList>
               {breadcrumbList.map((item, index) => {
@@ -88,9 +87,9 @@ const Index = () => {
               })}
             </BreadcrumbList>
           </Breadcrumb>
-        </Flex>
-      </Flex>
-      <Flex className={styles.barRight} align="center" gap="4">
+        </div>
+      </div>
+      <div className={styles.barRight}>
         {!disableMinimize && (
           <span className={styles.controlButton} onClick={handleMinimize}>
             <Minus size={16} />
@@ -104,8 +103,8 @@ const Index = () => {
         <span className={styles.controlButton} onClick={handleClose}>
           <Close size={16} />
         </span>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };
 

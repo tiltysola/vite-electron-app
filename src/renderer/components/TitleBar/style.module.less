@@ -1,16 +1,31 @@
 .title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 8px 16px;
   flex-shrink: 0;
   border-bottom: 1px solid #f0f0f0;
+  gap: 16px;
   -webkit-app-region: drag;
   .bar-left {
+    display: flex;
+    align-items: center;
     height: 100%;
     font-size: 14px;
+    gap: 16px;
     -webkit-app-region: no-drag;
   }
+  .breadcrumbContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .bar-right {
+    display: flex;
+    align-items: center;
     height: 100%;
+    gap: 16px;
     -webkit-app-region: no-drag;
   }
   .breadcrumb-link {
