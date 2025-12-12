@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
-import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button';
 import { Input } from '@/shadcn/ui/input';
 
 import styles from './style.module.less';
@@ -71,7 +71,11 @@ const Index = () => {
         </div>
       </div>
       <div className={styles.alertButtons}>
-        {(okText || type === 'input') && <Button size="sm" onClick={handleOk}>{okText || '确定'}</Button>}
+        {(okText || type === 'input') && (
+          <Button size="sm" onClick={handleOk}>
+            {okText || '确定'}
+          </Button>
+        )}
         <Button variant="ghost" size="sm" onClick={handleCancel}>
           {cancelText || 'Close'}
         </Button>

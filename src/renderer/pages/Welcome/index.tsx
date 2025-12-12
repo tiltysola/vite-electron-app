@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button';
 
 import styles from './style.module.less';
 

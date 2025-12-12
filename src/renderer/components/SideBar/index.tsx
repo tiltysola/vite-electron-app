@@ -7,7 +7,6 @@ import {
   ChevronRight,
   ChevronsUpDown,
   CreditCard,
-  GalleryVerticalEnd,
   LogOut,
   Sparkles,
   Terminal,
@@ -66,7 +65,7 @@ const Index = () => {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className={styles.menuButton}>
               <div className={styles.iconContainer}>
-                <GalleryVerticalEnd className={styles.icon} />
+                <img src="./logo.png" alt={packageJson.name} />
               </div>
               <div className={styles.textContainer}>
                 <span className={styles.titleText}>{packageJson.name}</span>
@@ -131,7 +130,7 @@ const Index = () => {
       </SidebarContent>
 
       <SidebarFooter>
-        <SidebarGroup className={styles.collapsibleGroup}>
+        <SidebarGroup className={styles.footerGroup}>
           <SidebarGroupLabel>Advanced</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem>

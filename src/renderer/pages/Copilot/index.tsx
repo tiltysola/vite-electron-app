@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { Plus } from 'lucide-react';
 
-import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button';
 import { useSidebar } from '@/shadcn/components/animate-ui/components/radix/sidebar';
 import { Conversations } from '@ant-design/x';
 
@@ -23,9 +23,12 @@ export interface OutletContext {
 }
 
 const Index = () => {
-  const { open, setOpen } = useSidebar();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string>();
+
+  const location = useLocation();
+
+  const { open, setOpen } = useSidebar();
 
   const previousOpenStatus = useRef<boolean>(open);
 
@@ -38,7 +41,7 @@ const Index = () => {
       ..._conversations,
       {
         id: `conversation-${conversations.length + 1}`,
-        title: `对话${conversations.length + 1}`,
+        title: `Conversation ${conversations.length + 1}`,
         createdAt: new Date(),
       },
     ]);
@@ -49,12 +52,12 @@ const Index = () => {
     setConversations([
       {
         id: 'conversation-1',
-        title: '对话1',
+        title: 'Conversation 1',
         createdAt: new Date(),
       },
       {
         id: 'conversation-2',
-        title: '对话2',
+        title: 'Conversation 2',
         createdAt: new Date(),
       },
     ]);
@@ -73,12 +76,12 @@ const Index = () => {
       <div className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <img src="./logo.png" />
-          <span>大模型对话</span>
+          <span>Copilot Chat</span>
         </div>
         <div className={styles.sidebarActions}>
           <Button className={styles.addConversation} onClick={handleAddConversation}>
             <Plus />
-            新增对话
+            New Conversation
           </Button>
         </div>
         <Conversations
@@ -91,14 +94,18 @@ const Index = () => {
           onActiveChange={handleChangeConversation}
         />
       </div>
-      <Outlet
-        context={{
-          currentConversationId,
-          conversations,
-          setCurrentConversationId,
-          setConversations,
-        }}
-      />
+      {location.pathname !== '/copilot' ? (
+        <Outlet
+          context={{
+            currentConversationId,
+            conversations,
+            setCurrentConversationId,
+            setConversations,
+          }}
+        />
+      ) : (
+        <div className={styles.empty}>Empty</div>
+      )}
     </div>
   );
 };

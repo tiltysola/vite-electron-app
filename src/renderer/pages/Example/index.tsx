@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { User } from 'lucide-react';
 
 import { useIpcRenderer } from '@/hooks';
-import { Button } from '@/shadcn/components/animate-ui/components/buttons/button'
+import { Button } from '@/shadcn/components/animate-ui/components/buttons/button';
 import { Bubble, Welcome } from '@ant-design/x';
 
 import styles from './style.module.less';
@@ -25,7 +25,8 @@ const Index = () => {
 
   useEffect(() => {
     const outgoingData: MessageProps = {
-      content: 'This is a message sent by ipcRenderer.send, will receive a message reply in 1 second.',
+      content:
+        'This is a message sent by ipcRenderer.send, will receive a message reply in 1 second.',
       role: 'user',
     };
     window.ipcRenderer.send('funSayHello', outgoingData);
@@ -33,7 +34,8 @@ const Index = () => {
       return [...messages, outgoingData];
     });
     const outGoingDataInvoke: MessageProps = {
-      content: 'This is a message sent by ipcRenderer.invoke, will receive a message reply immediately.',
+      content:
+        'This is a message sent by ipcRenderer.invoke, will receive a message reply immediately.',
       role: 'user',
     };
     setMessageQueue((messages) => {
